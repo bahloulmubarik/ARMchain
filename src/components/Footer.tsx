@@ -3,7 +3,7 @@ import { Twitter, MessageCircle, Send, Github, Linkedin, Mail, MapPin, Phone } f
 
 export function Footer() {
   return (
-    <footer className="bg-gray-900 border-t border-gray-800 py-20 px-4">
+    <footer className="bg-black border-t border-gray-800 py-20 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Main Footer Content */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
@@ -18,7 +18,7 @@ export function Footer() {
             <p className="text-gray-400 leading-relaxed mb-6">
               Building the quantum-resistant future of blockchain technology with mobile nodes and advanced cryptographic security.
             </p>
-            
+
             {/* Contact Info */}
             <div className="space-y-3">
               <div className="flex items-center text-gray-400">
@@ -35,7 +35,7 @@ export function Footer() {
               </div>
             </div>
           </div>
-          
+
           {/* Column 2 - Product & Platform */}
           <div>
             <h4 className="text-white font-semibold mb-6 text-lg">Platform</h4>
@@ -63,7 +63,7 @@ export function Footer() {
               </a>
             </div>
           </div>
-          
+
           {/* Column 3 - Developers & Community */}
           <div>
             <h4 className="text-white font-semibold mb-6 text-lg">Developers</h4>
@@ -91,7 +91,7 @@ export function Footer() {
               </a>
             </div>
           </div>
-          
+
           {/* Column 4 - Resources & Support */}
           <div>
             <h4 className="text-white font-semibold mb-6 text-lg">Resources</h4>
@@ -120,7 +120,7 @@ export function Footer() {
             </div>
           </div>
         </div>
-        
+
         {/* Social Media & Newsletter Section */}
         <div className="border-t border-gray-800 pt-12 mb-12">
           <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -128,39 +128,39 @@ export function Footer() {
             <div>
               <h4 className="text-white font-semibold mb-6 text-lg">Follow Us</h4>
               <div className="flex space-x-4">
-                <a 
-                  href="#" 
+                <a
+                  href="#"
                   className="w-12 h-12 bg-gray-800 hover:bg-[#A25CFE] rounded-xl flex items-center justify-center transition-all duration-300 group hover:scale-110"
                 >
                   <Twitter className="h-5 w-5 text-gray-400 group-hover:text-white" />
                 </a>
-                <a 
-                  href="#" 
+                <a
+                  href="#"
                   className="w-12 h-12 bg-gray-800 hover:bg-[#A25CFE] rounded-xl flex items-center justify-center transition-all duration-300 group hover:scale-110"
                 >
                   <Linkedin className="h-5 w-5 text-gray-400 group-hover:text-white" />
                 </a>
-                <a 
-                  href="#" 
+                <a
+                  href="#"
                   className="w-12 h-12 bg-gray-800 hover:bg-[#A25CFE] rounded-xl flex items-center justify-center transition-all duration-300 group hover:scale-110"
                 >
                   <MessageCircle className="h-5 w-5 text-gray-400 group-hover:text-white" />
                 </a>
-                <a 
-                  href="#" 
+                <a
+                  href="#"
                   className="w-12 h-12 bg-gray-800 hover:bg-[#A25CFE] rounded-xl flex items-center justify-center transition-all duration-300 group hover:scale-110"
                 >
                   <Send className="h-5 w-5 text-gray-400 group-hover:text-white" />
                 </a>
-                <a 
-                  href="#" 
+                <a
+                  href="#"
                   className="w-12 h-12 bg-gray-800 hover:bg-[#A25CFE] rounded-xl flex items-center justify-center transition-all duration-300 group hover:scale-110"
                 >
                   <Github className="h-5 w-5 text-gray-400 group-hover:text-white" />
                 </a>
               </div>
             </div>
-            
+
             {/* Right - Newsletter Signup */}
             <div>
               <h4 className="text-white font-semibold mb-4 text-lg">Stay Updated</h4>
@@ -168,8 +168,8 @@ export function Footer() {
                 Get the latest news and updates from ARMchain directly to your inbox.
               </p>
               <div className="flex gap-3">
-                <input 
-                  type="email" 
+                <input
+                  type="email"
                   placeholder="Enter your email"
                   className="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-[#A25CFE] transition-colors"
                 />
@@ -180,7 +180,7 @@ export function Footer() {
             </div>
           </div>
         </div>
-        
+
         {/* Bottom Section - Legal & Copyright */}
         <div className="border-t border-gray-800 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
@@ -193,7 +193,7 @@ export function Footer() {
                 Building the quantum-resistant future of blockchain technology.
               </p>
             </div>
-            
+
             {/* Right - Legal Links */}
             <div className="flex flex-wrap gap-6 text-sm">
               <a href="#" className="text-gray-400 hover:text-[#A25CFE] transition-colors">

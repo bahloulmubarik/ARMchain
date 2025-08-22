@@ -1,4 +1,5 @@
-import { Rocket, Coins, Building, Users, Shield, Zap, Globe, Trophy } from 'lucide-react';
+import { Rocket, Coins, Building, Shield, Globe, Trophy } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const roadmapItems = [
   {
@@ -53,37 +54,41 @@ const roadmapItems = [
 
 export function RoadmapSection() {
   return (
-    <section className="py-24 px-4 bg-gradient-to-br from-gray-900/50 to-blue-900/20">
+    <section className="py-24 px-4 bg-black">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
             Our Roadmap
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            A strategic journey towards building the most advanced quantum-resistant blockchain ecosystem
-          </p>
         </div>
 
         {/* Timeline */}
         <div className="relative">
           {/* Central Timeline Line */}
           <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-[#8129FF] to-[#A25CFE] h-full hidden lg:block"></div>
-          
+
           {/* Timeline Items */}
           <div className="space-y-16">
             {roadmapItems.map((item, index) => {
               const IconComponent = item.icon;
               const isLeft = index % 2 === 0;
-              
+
               return (
-                <div key={index} className="relative">
+                <motion.div
+                  key={index}
+                  className="relative"
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.3 }}
+                  viewport={{ once: true }}
+                >
                   {/* Desktop Layout */}
                   <div className="hidden lg:flex items-center">
                     {isLeft ? (
                       <>
                         {/* Left Side Content */}
                         <div className="w-1/2 pr-12">
-                          <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:scale-105 transition-all duration-300 group">
+                          <div className="bg-black/70 backdrop-blur-sm rounded-2xl p-8 border border-[#8129FF]/30 hover:scale-105 transition-all duration-300 group shadow-lg shadow-[#8129FF]/10">
                             <div className="flex items-center justify-between mb-4">
                               <span className="text-[#A25CFE] font-bold text-lg">{item.quarter}</span>
                               <div className="w-12 h-12 bg-gradient-to-r from-[#8129FF] to-[#A25CFE] rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -104,10 +109,10 @@ export function RoadmapSection() {
                             </ul>
                           </div>
                         </div>
-                        
+
                         {/* Center Timeline Node */}
-                        <div className="w-6 h-6 bg-gradient-to-r from-[#8129FF] to-[#A25CFE] rounded-full border-4 border-gray-900 z-10 relative"></div>
-                        
+                        <div className="w-6 h-6 bg-gradient-to-r from-[#8129FF] to-[#A25CFE] rounded-full border-4 border-black z-10 relative"></div>
+
                         {/* Right Side Empty */}
                         <div className="w-1/2 pl-12"></div>
                       </>
@@ -115,13 +120,13 @@ export function RoadmapSection() {
                       <>
                         {/* Left Side Empty */}
                         <div className="w-1/2 pr-12"></div>
-                        
+
                         {/* Center Timeline Node */}
-                        <div className="w-6 h-6 bg-gradient-to-r from-[#8129FF] to-[#A25CFE] rounded-full border-4 border-gray-900 z-10 relative"></div>
-                        
+                        <div className="w-6 h-6 bg-gradient-to-r from-[#8129FF] to-[#A25CFE] rounded-full border-4 border-black z-10 relative"></div>
+
                         {/* Right Side Content */}
                         <div className="w-1/2 pl-12">
-                          <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:scale-105 transition-all duration-300 group">
+                          <div className="bg-black/70 backdrop-blur-sm rounded-2xl p-8 border border-[#8129FF]/30 hover:scale-105 transition-all duration-300 group shadow-lg shadow-[#8129FF]/10">
                             <div className="flex items-center justify-between mb-4">
                               <div className="w-12 h-12 bg-gradient-to-r from-[#8129FF] to-[#A25CFE] rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
                                 <IconComponent className="h-6 w-6 text-white" />
@@ -148,7 +153,7 @@ export function RoadmapSection() {
 
                   {/* Mobile Layout */}
                   <div className="lg:hidden">
-                    <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:scale-105 transition-all duration-300 group">
+                    <div className="bg-black/70 backdrop-blur-sm rounded-2xl p-8 border border-[#8129FF]/30 hover:scale-105 transition-all duration-300 group shadow-lg shadow-[#8129FF]/10">
                       <div className="flex items-center justify-between mb-4">
                         <span className="text-[#A25CFE] font-bold text-lg">{item.quarter}</span>
                         <div className="w-12 h-12 bg-gradient-to-r from-[#8129FF] to-[#A25CFE] rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -169,27 +174,9 @@ export function RoadmapSection() {
                       </ul>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
-          </div>
-        </div>
-
-        {/* Call to Action */}
-        <div className="text-center mt-16">
-          <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-2xl p-12 border border-white/10 max-w-4xl mx-auto">
-            <h3 className="text-3xl font-bold text-white mb-6">Join Our Journey</h3>
-            <p className="text-xl text-gray-300 mb-8">
-              Be part of the quantum-resistant blockchain revolution. Follow our progress and contribute to the future.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-gradient-to-r from-[#8129FF] to-[#A25CFE] text-white font-bold px-8 py-4 rounded-full hover:opacity-90 transition-opacity">
-                Follow Updates
-              </button>
-              <button className="border border-[#A25CFE] text-[#A25CFE] font-bold px-8 py-4 rounded-full hover:bg-[#A25CFE] hover:text-white transition-colors">
-                Join Community
-              </button>
-            </div>
           </div>
         </div>
       </div>

@@ -1,163 +1,453 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Footer } from '~/components/Footer';
-import { Calendar, User, ArrowRight } from 'lucide-react';
+import { Footer } from "~/components/Footer";
+import {
+  Calendar,
+  User,
+  ArrowRight,
+  Search,
+  ChevronDown,
+  X,
+} from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
+// ------------------ Mock Data ------------------
 const blogPosts = [
   {
     id: 1,
-    title: "The Future of Quantum-Resistant Blockchain Technology",
-    excerpt: "Exploring how ARMchain's innovative approach to quantum resistance will shape the future of decentralized finance and digital assets.",
-    category: "Technology",
-    author: "Dr. Sarah Chen",
-    date: "December 15, 2024",
-    readTime: "8 min read",
-    featured: true
+    title: "Introducing ARM Chain",
+    excerpt: "Learn about the vision and fundamentals of ARM Chain.",
+    category: "Announcement",
+    readTime: "3 min read",
   },
   {
     id: 2,
-    title: "Building Scalable Mobile Node Infrastructure",
-    excerpt: "Learn how our mobile node architecture enables unprecedented scalability while maintaining security and decentralization.",
-    category: "Development",
-    author: "Alex Rodriguez",
-    date: "December 10, 2024",
-    readTime: "6 min read",
-    featured: false
+    title: "Developer Guide to ARM Smart Contracts",
+    excerpt: "Step by step tutorial on deploying contracts.",
+    category: "Developer",
+    readTime: "5 min read",
   },
   {
     id: 3,
-    title: "ARMchain Ecosystem: A Deep Dive into DeFi Integration",
-    excerpt: "Discover how ARMchain's stablecoin ecosystem is revolutionizing cross-border payments and decentralized finance.",
-    category: "DeFi",
-    author: "Maria Thompson",
-    date: "December 5, 2024",
-    readTime: "10 min read",
-    featured: false
+    title: "Quantum-Resistant Cryptography Explained",
+    excerpt: "Research insights into PQC and blockchain security.",
+    category: "Research",
+    readTime: "4 min read",
   },
   {
     id: 4,
-    title: "Community Governance: Shaping ARMchain's Future",
-    excerpt: "Understanding the role of community governance in ARMchain's decision-making process and future development.",
-    category: "Governance",
-    author: "James Park",
-    date: "November 28, 2024",
-    readTime: "5 min read",
-    featured: false
+    title: "Tokenization of Real Estate",
+    excerpt: "How ARM Chain enables tokenized property ownership.",
+    category: "Education",
+    readTime: "6 min read",
   },
   {
     id: 5,
-    title: "Security Audit Results: Strengthening Trust",
-    excerpt: "Comprehensive overview of ARMchain's latest security audit results and the measures taken to enhance protocol security.",
-    category: "Security",
-    author: "Dr. Emily Watson",
-    date: "November 20, 2024",
-    readTime: "7 min read",
-    featured: false
+    title: "ARM Chain Roadmap 2025",
+    excerpt: "Our journey towards scalability and adoption.",
+    category: "Vision",
+    readTime: "2 min read",
   },
-  {
-    id: 6,
-    title: "Partnership Spotlight: Enterprise Adoption",
-    excerpt: "How major enterprises are leveraging ARMchain's quantum-resistant technology for their blockchain infrastructure needs.",
-    category: "Partnership",
-    author: "Michael Zhang",
-    date: "November 15, 2024",
-    readTime: "4 min read",
-    featured: false
-  }
 ];
 
-function Blog() {
-  const featuredPost = blogPosts.find(post => post.featured);
-  const regularPosts = blogPosts.filter(post => !post.featured);
+// ------------------ Filters ------------------
+const filterOptions = {
+  categories: ["Announcement", "Developer", "Education", "Research", "Vision"],
+  services: ["Service 1", "Service 2", "Service 3"],
+  tags: {
+    industry: ["DeFi", "Enterprise", "Quantum", "Real Estate", "Social Impact"],
+    topics: ["Startups", "Staking", "Metaverse", "Governance", "Economics"],
+    applications: ["AMM", "Cross-chain", "DEX", "Money Markets", "Stablecoin"],
+    stack: ["Brownie", "Hardhat", "Python", "Solidity", "Rust", "Web3.js"],
+    other: ["Community", "Roadmap", "Case Studies", "Partnerships"],
+  },
+};
+
+// ------------------ Components ------------------
+function SearchAndFilters() {
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
   return (
-    <div className="min-h-screen pt-24">
-      {/* Hero Section */}
-      <section className="py-24 px-4 bg-gradient-to-br from-purple-900/30 via-blue-900/20 to-indigo-900/30">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 tracking-tight">
-            ARMchain Blog
-          </h1>
-          <p className="text-xl text-gray-300 leading-relaxed">
-            Insights, updates, and deep dives into the quantum-resistant blockchain ecosystem
-          </p>
+    <div className="flex flex-wrap items-center gap-4 rounded-lg bg-gray-900/50 p-4">
+      {/* Search Bar */}
+      <div className="min-w-[300px] flex-1">
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="Search your topic here"
+            className="w-full rounded-lg bg-gray-800 px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+          />
+          <Search className="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
         </div>
-      </section>
+      </div>
 
-      {/* Featured Post */}
-      {featuredPost && (
-        <section className="py-24 px-4">
-          <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 tracking-tight">Featured Article</h2>
-            <div className="bg-gray-800/40 backdrop-blur-sm rounded-2xl overflow-hidden hover:bg-gray-800/60 transition-colors">
-              <div className="grid lg:grid-cols-2 gap-0">
-                <div className="h-64 lg:h-auto bg-gradient-to-br from-[#8129FF]/20 to-[#A25CFE]/20 flex items-center justify-center">
-                  <div className="text-gray-500">Featured Image</div>
+      {/* Filter Buttons */}
+      <div className="flex flex-wrap items-center gap-3">
+        <FilterDropdown
+          title="Category"
+          options={filterOptions.categories}
+          isActive={activeDropdown === "category"}
+          onClick={() =>
+            setActiveDropdown(activeDropdown === "category" ? null : "category")
+          }
+        />
+
+        <FilterDropdown
+          title="Services"
+          options={filterOptions.services}
+          isActive={activeDropdown === "services"}
+          onClick={() =>
+            setActiveDropdown(activeDropdown === "services" ? null : "services")
+          }
+        />
+
+        <TagsDropdown
+          isActive={activeDropdown === "tags"}
+          onClick={() =>
+            setActiveDropdown(activeDropdown === "tags" ? null : "tags")
+          }
+          tags={filterOptions.tags}
+        />
+
+        {/* Clear All */}
+        <button className="flex items-center gap-2 px-4 py-2 text-gray-400 hover:text-white">
+          <X className="h-4 w-4" />
+          Clear All
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function FilterDropdown({ title, options, isActive, onClick }) {
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+
+  const toggleOption = (option: string) => {
+    setSelectedOptions((prev) =>
+      prev.includes(option)
+        ? prev.filter((item) => item !== option)
+        : [...prev, option],
+    );
+  };
+
+  return (
+    <div className="relative">
+      <button
+        onClick={onClick}
+        className="flex items-center gap-2 rounded-lg bg-gray-800 px-4 py-2 text-white hover:bg-gray-700"
+      >
+        {title}
+        <ChevronDown
+          className={`h-4 w-4 transition-transform ${isActive ? "rotate-180" : ""}`}
+        />
+      </button>
+      <AnimatePresence>
+        {isActive && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="absolute top-full z-50 mt-2 w-48 rounded-lg bg-gray-800 py-2 shadow-lg"
+          >
+            {options.map((option) => (
+              <label
+                key={option}
+                className="flex w-full items-center px-4 py-2 text-white hover:bg-gray-700"
+              >
+                <input
+                  type="checkbox"
+                  checked={selectedOptions.includes(option)}
+                  onChange={() => toggleOption(option)}
+                  className="mr-3 h-4 w-4 rounded border-gray-600 bg-gray-700 text-purple-600"
+                />
+                {option}
+              </label>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function TagsDropdown({ tags, isActive, onClick }) {
+  const [selectedTags, setSelectedTags] = useState<Record<string, string[]>>(
+    {},
+  );
+
+  const toggleTag = (group: string, tag: string) => {
+    setSelectedTags((prev) => ({
+      ...prev,
+      [group]: prev[group]?.includes(tag)
+        ? prev[group].filter((t) => t !== tag)
+        : [...(prev[group] || []), tag],
+    }));
+  };
+
+  return (
+    <div className="relative">
+      <button
+        onClick={onClick}
+        className="flex items-center gap-2 rounded-lg bg-gray-800 px-4 py-2 text-white hover:bg-gray-700"
+      >
+        Tags
+        <ChevronDown
+          className={`h-4 w-4 transition-transform ${isActive ? "rotate-180" : ""}`}
+        />
+      </button>
+      <AnimatePresence>
+        {isActive && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="absolute top-full z-50 mt-2 grid w-[600px] -translate-x-1/2 grid-cols-2 gap-4 rounded-lg bg-gray-800 p-4 shadow-lg md:grid-cols-3"
+          >
+            {Object.entries(tags).map(([group, options]) => (
+              <div key={group}>
+                <h4 className="mb-2 text-sm font-semibold text-purple-400">
+                  {group}
+                </h4>
+                <div className="space-y-1">
+                  {options.map((opt) => (
+                    <label
+                      key={opt}
+                      className="flex w-full cursor-pointer items-center rounded px-2 py-1 text-white hover:bg-gray-700"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={selectedTags[group]?.includes(opt) || false}
+                        onChange={() => toggleTag(group, opt)}
+                        className="mr-2 h-4 w-4 rounded border-gray-600 bg-gray-700 text-purple-600"
+                      />
+                      {opt}
+                    </label>
+                  ))}
                 </div>
-                <div className="p-12">
-                  <div className="flex items-center space-x-4 mb-4">
-                    <span className="px-3 py-1 bg-[#8129FF]/20 text-[#A25CFE] text-sm rounded-full">
-                      {featuredPost.category}
-                    </span>
-                    <span className="text-gray-400 text-sm">{featuredPost.readTime}</span>
-                  </div>
-                  <h3 className="text-2xl font-bold text-white mb-4">{featuredPost.title}</h3>
-                  <p className="text-gray-300 mb-6 leading-relaxed">{featuredPost.excerpt}</p>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4 text-sm text-gray-400">
-                      <div className="flex items-center space-x-2">
-                        <User className="h-4 w-4" />
-                        <span>{featuredPost.author}</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Calendar className="h-4 w-4" />
-                        <span>{featuredPost.date}</span>
-                      </div>
-                    </div>
-                    <button className="flex items-center text-[#A25CFE] hover:text-white transition-colors">
-                      Read More <ArrowRight className="ml-2 h-4 w-4" />
-                    </button>
-                  </div>
-                </div>
+              </div>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+// ------------------ Sections ------------------
+function BlogCard({ post }) {
+  return (
+    <div className="overflow-hidden rounded-lg bg-gray-900/50">
+      <div className="h-48 bg-gray-800" />
+      <div className="p-4">
+        <h3 className="mb-4 font-bold text-white">{post.title}</h3>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="rounded-full bg-purple-600/20 px-2 py-1 text-xs text-purple-400">
+              {post.category}
+            </span>
+            <a
+              href="#"
+              className="text-sm text-purple-400 hover:text-purple-300"
+            >
+              Read →
+            </a>
+          </div>
+          <span className="text-sm text-gray-400">{post.readTime}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MostRecent() {
+  return (
+    <div className="flex flex-col items-center space-y-8">
+      {blogPosts.slice(0, 6).map((post) => (
+        <div key={post.id} className="text-center">
+          <span className="mb-2 inline-block rounded-full bg-purple-600/20 px-3 py-1 text-sm text-purple-400">
+            {post.category}
+          </span>
+          <h4 className="text-2xl font-bold text-white transition-colors hover:text-purple-400">
+            <a href="#">{post.title}</a>
+          </h4>
+          <p className="mt-2 text-gray-400">{post.readTime}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ------------------ Blog Page ------------------
+function Blog() {
+  return (
+    <div className="min-h-screen bg-black pt-24">
+      <div className="mx-auto max-w-7xl px-4">
+        {/* Search and Filters */}
+        <SearchAndFilters />
+
+        {/* Featured and Trending */}
+        <section className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-2">
+          {/* Featured Blog */}
+          <div className="lg:col-span-1">
+            <div className="group relative h-[400px] overflow-hidden rounded-xl bg-gray-800">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+              <div className="absolute bottom-0 p-6">
+                <span className="rounded-full bg-purple-600 px-3 py-1 text-sm text-white">
+                  {blogPosts[0].category}
+                </span>
+                <h2 className="mb-2 mt-3 text-3xl font-bold text-white">
+                  {blogPosts[0].title}
+                </h2>
+                <p className="mb-2 line-clamp-2 text-lg text-gray-300">
+                  {blogPosts[0].excerpt}
+                </p>
+                <span className="text-sm text-gray-400">
+                  {blogPosts[0].readTime}
+                </span>
               </div>
             </div>
           </div>
-        </section>
-      )}
 
-      {/* Regular Posts Grid */}
-      <section className="py-24 px-4 bg-gray-900/30">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-white mb-12 tracking-tight">Latest Articles</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {regularPosts.map((post) => (
-              <article
-                key={post.id}
-                className="bg-gray-800/40 backdrop-blur-sm rounded-xl overflow-hidden hover:bg-gray-800/60 transition-colors cursor-pointer group"
-              >
-                <div className="h-48 bg-gradient-to-br from-[#8129FF]/20 to-[#A25CFE]/20 flex items-center justify-center">
-                  <div className="text-gray-500 text-sm">Article Image</div>
-                </div>
-                <div className="p-6">
-                  <div className="flex items-center space-x-3 mb-3">
-                    <span className="px-2 py-1 bg-[#8129FF]/20 text-[#A25CFE] text-xs rounded-full">
+          {/* Trending Blogs */}
+          <div>
+            <div className="mb-6 flex items-center justify-between">
+              <h3 className="text-2xl font-bold text-white">Trending</h3>
+            </div>
+
+            <div className="space-y-4">
+              {blogPosts.slice(0, 4).map((post, index) => (
+                <div key={post.id}>
+                  <a
+                    href="#"
+                    className="block text-white transition hover:text-purple-400"
+                  >
+                    <span className="block text-sm text-purple-400">
                       {post.category}
                     </span>
-                    <span className="text-gray-400 text-xs">{post.readTime}</span>
-                  </div>
-                  <h3 className="text-lg font-bold text-white mb-3 group-hover:text-[#A25CFE] transition-colors">
-                    {post.title}
-                  </h3>
-                  <p className="text-gray-400 text-sm mb-4 leading-relaxed">{post.excerpt}</p>
-                  <div className="flex items-center justify-between text-xs text-gray-500">
-                    <span>{post.author}</span>
-                    <span>{post.date}</span>
-                  </div>
+                    <h4 className="text-lg font-medium">{post.title}</h4>
+                    <p className="text-sm text-gray-400">{post.readTime}</p>
+                  </a>
+
+                  {/* Divider (skip for last item) */}
+                  {index < blogPosts.slice(0, 4).length - 1 && (
+                    <hr className="my-3 border-gray-700" />
+                  )}
                 </div>
-              </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Vision Section */}
+        <section className="mt-24 grid grid-cols-2 gap-8">
+          <div className="space-y-4">
+            <h2 className="mb-8 text-2xl font-bold text-white">👁 Vision</h2>
+            {blogPosts.slice(0, 3).map((post) => (
+              <div
+                key={post.id}
+                className="flex gap-4 rounded-lg bg-gray-900/50 p-4 transition-colors hover:bg-gray-900/70"
+              >
+                <div className="h-24 w-24 flex-shrink-0 rounded-lg bg-gray-800" />
+                <div>
+                  <h3 className="mb-2 font-bold text-white">{post.title}</h3>
+                  <p className="text-sm text-gray-400">
+                    {post.category} · {post.readTime}
+                  </p>
+                </div>
+              </div>
             ))}
           </div>
+          <div className="rounded-xl bg-gray-800">
+            {/* Placeholder for right side image */}
+          </div>
+        </section>
+
+        {/* Featured Blogs */}
+        <section className="mt-24">
+          <div className="mb-8 flex items-center justify-between">
+            <h2 className="text-2xl font-bold text-white">🌟 Featured Blogs</h2>
+            <div className="flex gap-2">
+              <button className="rounded-full bg-gray-800 p-2 hover:bg-gray-700">
+                <ArrowRight className="h-4 w-4 rotate-180 text-white" />
+              </button>
+              <button className="rounded-full bg-gray-800 p-2 hover:bg-gray-700">
+                <ArrowRight className="h-4 w-4 text-white" />
+              </button>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {blogPosts.slice(0, 4).map((post) => (
+              <BlogCard key={post.id} post={post} />
+            ))}
+          </div>
+        </section>
+
+        {/* Fundamentals */}
+        <section className="mt-24">
+          <div className="mb-8 flex items-center justify-between">
+            <h2 className="text-2xl font-bold text-white">📖 Fundamentals</h2>
+            <div className="flex gap-2">
+              <button className="rounded-full bg-gray-800 p-2 hover:bg-gray-700">
+                <ArrowRight className="h-4 w-4 rotate-180 text-white" />
+              </button>
+              <button className="rounded-full bg-gray-800 p-2 hover:bg-gray-700">
+                <ArrowRight className="h-4 w-4 text-white" />
+              </button>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {blogPosts.slice(0, 4).map((post) => (
+              <BlogCard key={post.id} post={post} />
+            ))}
+          </div>
+        </section>
+
+        {/* Builder Section */}
+        <section className="mt-24">
+          <div className="mb-8 flex items-center justify-between">
+            <h2 className="text-2xl font-bold text-white">🛠 For Builders</h2>
+            <div className="flex gap-2">
+              <button className="rounded-full bg-gray-800 p-2 hover:bg-gray-700">
+                <ArrowRight className="h-4 w-4 rotate-180 text-white" />
+              </button>
+              <button className="rounded-full bg-gray-800 p-2 hover:bg-gray-700">
+                <ArrowRight className="h-4 w-4 text-white" />
+              </button>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {blogPosts.slice(0, 4).map((post) => (
+              <BlogCard key={post.id} post={post} />
+            ))}
+          </div>
+        </section>
+        {/* Most Recent */}
+        <section className="mt-24">
+          <h2 className="mb-8 text-2xl font-bold text-white">🕒 Most Recent</h2>
+          <MostRecent />
+        </section>
+
+        {/* Pagination */}
+        <div className="mt-24 flex flex-col items-center gap-4 pb-24">
+          <div className="flex gap-2">
+            {[1, 2, 3, 4, 5].map((num) => (
+              <button
+                key={num}
+                className={`rounded-full px-4 py-2 ${
+                  num === 1
+                    ? "bg-purple-600 text-white"
+                    : "bg-gray-800 text-gray-400 hover:bg-gray-700"
+                }`}
+              >
+                {num}
+              </button>
+            ))}
+          </div>
+          <button className="rounded-full bg-purple-600 px-6 py-2 text-white hover:bg-purple-500">
+            Load More
+          </button>
         </div>
-      </section>
+      </div>
 
       <Footer />
     </div>

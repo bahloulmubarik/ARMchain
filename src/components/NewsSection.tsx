@@ -60,6 +60,13 @@ const newsItems = [
   }
 ];
 
+const newsImages = [
+  '/assets/qunatum1.jpg',
+  '/assets/qunatum2.jpg',
+  '/assets/qunatum3.jpg',
+  '/assets/quantum4.jpg',
+];
+
 export function NewsSection() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -76,14 +83,14 @@ export function NewsSection() {
   };
 
   return (
-    <section className="py-24 px-4 bg-gray-900/50">
+    <section className="py-24 px-4 bg-black">
       <div className="max-w-7xl mx-auto">
         {/* Heading with Navigation */}
         <div className="flex items-center justify-between mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
             In the news
           </h2>
-          
+
           {/* Navigation Buttons */}
           <div className="flex items-center gap-2">
             <button
@@ -100,37 +107,39 @@ export function NewsSection() {
             </button>
           </div>
         </div>
-        
+
         {/* Horizontal Scrolling News Cards */}
         <div
           ref={scrollContainerRef}
-          className="flex gap-6 overflow-x-auto scrollbar-hide pb-4"
+          className="flex gap-8 overflow-x-auto scrollbar-hide pb-4"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          {newsItems.map((item) => (
-            <div
-              key={item.id}
-              className="min-w-[300px] bg-gray-800/40 backdrop-blur-sm rounded-xl overflow-hidden hover:bg-gray-800/60 transition-colors cursor-pointer group flex-shrink-0"
-              style={{
-                boxShadow: '0 0 20px rgba(129, 41, 255, 0.1)',
-              }}
-            >
-              {/* Image */}
-              <div className="h-48 bg-gradient-to-br from-[#8129FF]/20 to-[#A25CFE]/20 flex items-center justify-center">
-                <div className="text-gray-500 text-sm">News Image</div>
-              </div>
-              
-              {/* Content */}
-              <div className="p-6">
-                <div className="flex items-center space-x-3 mb-3">
-                  <span className="text-xs text-gray-400">{item.date}</span>
-                  <span className="px-2 py-1 bg-[#8129FF]/20 text-[#A25CFE] text-xs rounded-full">
-                    {item.category}
-                  </span>
+          {newsItems.map((item, index) => (
+            <div key={item.id} className="group cursor-pointer flex-shrink-0 w-80">
+              <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-xl overflow-hidden hover:scale-105 transition-all duration-500 border border-white/10">
+                {/* Image */}
+                <div className="relative h-48">
+                  <img
+                    src={newsImages[index % newsImages.length]}
+                    alt={item.title}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#8129FF]/10 to-[#A25CFE]/10 group-hover:from-[#8129FF]/20 group-hover:to-[#A25CFE]/20 transition-all duration-300" />
                 </div>
-                <h3 className="text-white font-semibold group-hover:text-[#A25CFE] transition-colors">
-                  {item.title}
-                </h3>
+
+                {/* Content */}
+                <div className="p-6">
+                  <div className="flex items-center space-x-3 mb-2">
+                    <span className="text-xs text-gray-400">{item.date}</span>
+                    <span className="px-2 py-1 bg-[#8129FF]/20 text-[#A25CFE] text-xs rounded-full">
+                      {item.category}
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-bold text-white group-hover:text-[#A25CFE] transition-colors min-h-[84px]">
+                    {item.title}
+                  </h3>
+                </div>
               </div>
             </div>
           ))}

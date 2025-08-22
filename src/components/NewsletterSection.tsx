@@ -6,56 +6,54 @@ export function NewsletterSection() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement newsletter subscription logic
     console.log('Newsletter subscription:', email);
     setEmail('');
   };
 
   return (
-    <section className="py-24 px-4">
-      <div className="max-w-6xl mx-auto">
-        <div className="bg-gradient-to-br from-blue-900 via-blue-800 to-purple-900 rounded-2xl p-16 text-center relative overflow-hidden">
-          {/* Grid pattern background */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="w-full h-full" style={{
-              backgroundImage: `
-                linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)
-              `,
-              backgroundSize: '30px 30px'
-            }}></div>
-          </div>
-          
+    <section
+      className="py-28 px-4 relative"
+      style={{
+        backgroundImage: 'url(/assets/Newsletterback.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
+    >
+      <div className="max-w-7xl mx-auto">
+        <div
+          className="rounded-xl p-24 text-left relative overflow-hidden" // slightly less rounded
+          style={{
+            backgroundImage: 'url(/assets/newsback.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+          }}
+        >
           {/* Content wrapper */}
-          <div className="relative z-10">
-            {/* Icon */}
-            <div className="flex justify-center mb-8">
-              <div className="w-20 h-20 bg-gradient-to-r from-[#8129FF] to-[#A25CFE] rounded-full flex items-center justify-center shadow-2xl">
-                <Mail className="h-10 w-10 text-white" />
-              </div>
-            </div>
-            
-            {/* Text */}
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-              Stay in the loop with ARMchain updates
+          <div className="relative z-10 flex flex-col items-start gap-6">
+
+            {/* Title */}
+            <h2 className="text-3xl md:text-4xl font-bold text-white">
+              Get our Newsletter
             </h2>
-            <p className="text-blue-100 mb-12 text-lg max-w-2xl mx-auto">
-              Get the latest news, updates, and insights delivered to your inbox.
-            </p>
-            
+
             {/* Form */}
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col sm:flex-row gap-4 w-full max-w-md"
+            >
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
-                className="flex-1 px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-white placeholder-blue-200 focus:outline-none focus:border-[#8129FF] transition-colors text-lg"
+                className="flex-1 px-3 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-blue-200 focus:outline-none focus:border-[#8129FF] transition-colors text-base" // less rounded, shorter height
                 required
               />
               <button
                 type="submit"
-                className="bg-gradient-to-r from-[#8129FF] to-[#A25CFE] text-white font-bold px-10 py-4 rounded-full hover:opacity-90 transition-opacity text-lg shadow-lg"
+                className="px-3 py-2 bg-gradient-to-r from-[#8129FF] to-[#A25CFE] text-white font-bold rounded-lg hover:opacity-90 transition-opacity text-base shadow-lg" // same height & corner radius as input
               >
                 Subscribe
               </button>
@@ -63,6 +61,9 @@ export function NewsletterSection() {
           </div>
         </div>
       </div>
+
+      {/* Extra bottom space */}
+      <div className="h-32"></div>
     </section>
   );
 }
