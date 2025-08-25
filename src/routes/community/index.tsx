@@ -83,7 +83,7 @@ function Community() {
       <section
         className="relative bg-black px-4 py-24"
         style={{
-          backgroundImage: "url('/assets/Background/com.png')",
+          backgroundImage: "url('/assets/Background/aboutback.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}

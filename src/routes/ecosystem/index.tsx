@@ -11,7 +11,15 @@ function Ecosystem() {
   return (
     <div className="min-h-screen bg-black pt-24">
       {/* Hero Section - Keep placeholder for PNG */}
-      <section className="bg-gradient-to-br from-blue-900/40 via-purple-900/30 to-indigo-900/40 px-4 py-24">
+      <section
+        className="py-24 px-4 relative"
+        style={{
+          backgroundImage: 'url(/assets/Background/aboutback.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
         <div className="mx-auto max-w-7xl">
           <div className="grid items-center gap-16 lg:grid-cols-2">
             {/* Left side */}

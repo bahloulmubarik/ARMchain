@@ -17,7 +17,7 @@ function About() {
       <section
         className="py-24 px-4 relative"
         style={{
-          backgroundImage: 'url(/assets/mobilegradient.png)',
+          backgroundImage: 'url(/assets/Background/aboutback.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -71,7 +71,7 @@ function About() {
         },
         {
           title: "Our Vision",
-          description: `Pioneering the next-generation blockchain solutions to make decentralized technologies accessible and secure for everyone.`,
+          description: `Pioneering the next-generation blockchain solutions to make decentralized technologies accessible`,
         },
         {
           title: "Our Commitment",

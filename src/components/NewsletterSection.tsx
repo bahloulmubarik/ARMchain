@@ -12,7 +12,7 @@ export function NewsletterSection() {
 
   return (
     <section
-      className="py-28 px-4 relative"
+      className="py-20 px-4 relative"
       style={{
         backgroundImage: 'url(/assets/Newsletterback.png)',
         backgroundSize: 'cover',
@@ -21,15 +21,15 @@ export function NewsletterSection() {
       }}
     >
       <div className="max-w-7xl mx-auto">
-        <div
-          className="rounded-xl p-24 text-left relative overflow-hidden" // slightly less rounded
-          style={{
-            backgroundImage: 'url(/assets/newsback.png)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-          }}
-        >
+        <div className="rounded-xl p-24 text-left relative overflow-hidden"> {/* slightly less rounded */}
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+            src="/assets/Background/gradi.mp4"
+          ></video>
           {/* Content wrapper */}
           <div className="relative z-10 flex flex-col items-start gap-6">
 

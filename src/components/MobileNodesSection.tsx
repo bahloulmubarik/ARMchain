@@ -12,16 +12,16 @@ export function MobileNodesSection() {
       <div className="absolute inset-0 bg-black/50" />
       <div className="relative z-10">
         <div className="max-w-7xl mx-auto">
-          <div
-            className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-10 shadow-md border border-gray-700/50"
-            style={{
-              backgroundImage: 'url(/assets/Mobilenodebackground.png)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-            }}
-          >
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="bg-gray-800/30 backdrop-blur-sm rounded-2xl p-10 shadow-md border border-gray-700/50 relative overflow-visible"> {/* slightly less rounded */}
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover z-0 rounded-xl"
+            src="/assets/Background/gradi.mp4"
+          ></video>
+            <div className="grid lg:grid-cols-2 gap-12 items-center relative z-10">
               {/* Left Content */}
               <div>
                 <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">
@@ -47,12 +47,12 @@ export function MobileNodesSection() {
                 </div>
               </div>
 
-              {/* Right - Placeholder for 3D Image */}
+              {/* Right - 3D Image with Overflow Effect */}
               <div className="flex justify-center items-start relative h-60 overflow-visible">
                 <img
                   src="/assets/mobilenode.png"
                   alt="Mobile Node 3D Asset"
-                  className="w-[29rem] h-[29rem] object-contain absolute left-1/2 -translate-x-[30%] -top-32 z-10"
+                  className="w-[32rem] h-[29rem] object-contain absolute left-1/2 -translate-x-[25%] -top-32 z-20 drop-shadow-2xl"
                   style={{ maxWidth: 'none', maxHeight: 'none' }}
                 />
               </div>

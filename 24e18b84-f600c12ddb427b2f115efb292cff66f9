@@ -1,0 +1,212 @@
+import { Link, Outlet, useLocation, createFileRoute } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
+import { cn } from "~/lib/utils";
+import {
+  BookOpen,
+  Code,
+  FileText,
+  Users,
+  Server,
+  Home,
+  ChevronRight,
+  Search
+} from "lucide-react";
+
+export const Route = createFileRoute("/docs/layout")({
+  component: DocsLayout,
+});
+
+const sidebarItems = [
+  {
+    title: "Overview",
+    href: "/docs",
+    icon: Home,
+  },
+  {
+    title: "Getting Started",
+    href: "/docs/getting-started",
+    icon: BookOpen,
+    children: [
+      { title: "Installation Guide", href: "/docs/getting-started/installation" },
+      { title: "First Transaction", href: "/docs/getting-started/first-transaction" },
+      { title: "Wallet Setup", href: "/docs/getting-started/wallet-setup" },
+      { title: "Network Configuration", href: "/docs/getting-started/network-config" },
+    ]
+  },
+  {
+    title: "Developers",
+    href: "/docs/developers",
+    icon: Code,
+    children: [
+      { title: "API Reference", href: "/docs/developers/api-reference" },
+      { title: "Smart Contracts", href: "/docs/developers/smart-contracts" },
+      { title: "SDK Documentation", href: "/docs/developers/sdk" },
+      { title: "Code Examples", href: "/docs/developers/examples" },
+    ]
+  },
+  {
+    title: "Whitepaper",
+    href: "/docs/whitepaper",
+    icon: FileText,
+    children: [
+      { title: "Technical Whitepaper", href: "/docs/whitepaper/technical" },
+      { title: "Quantum Resistance", href: "/docs/whitepaper/quantum-resistance" },
+      { title: "Consensus Mechanism", href: "/docs/whitepaper/consensus" },
+      { title: "Economic Model", href: "/docs/whitepaper/economics" },
+    ]
+  },
+  {
+    title: "Governance",
+    href: "/docs/governance",
+    icon: Users,
+    children: [
+      { title: "Governance Overview", href: "/docs/governance/overview" },
+      { title: "Voting Process", href: "/docs/governance/voting" },
+      { title: "Proposal Guidelines", href: "/docs/governance/proposals" },
+      { title: "Community Decisions", href: "/docs/governance/decisions" },
+    ]
+  },
+  {
+    title: "Node Setup",
+    href: "/docs/node-setup",
+    icon: Server,
+    children: [
+      { title: "Validator Setup", href: "/docs/node-setup/validator" },
+      { title: "Mobile Nodes", href: "/docs/node-setup/mobile-nodes" },
+      { title: "Hardware Requirements", href: "/docs/node-setup/hardware" },
+      { title: "Monitoring Tools", href: "/docs/node-setup/monitoring" },
+    ]
+  },
+];
+
+export function DocsLayout() {
+  const location = useLocation();
+  const [activeSection, setActiveSection] = useState("");
+  const [expandedSections, setExpandedSections] = useState<string[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    setActiveSection(location.pathname);
+    // Auto-expand sections based on current path
+    const currentSection = sidebarItems.find(item =>
+      location.pathname.startsWith(item.href)
+    );
+    if (currentSection && !expandedSections.includes(currentSection.title)) {
+      setExpandedSections(prev => [...prev, currentSection.title]);
+    }
+  }, [location]);
+
+  const toggleSection = (sectionTitle: string) => {
+    setExpandedSections(prev =>
+      prev.includes(sectionTitle)
+        ? prev.filter(title => title !== sectionTitle)
+        : [...prev, sectionTitle]
+    );
+  };
+
+  const filteredItems = sidebarItems.filter(item =>
+    item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    item.children?.some(child =>
+      child.title.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  );
+
+  return (
+    <div className="flex min-h-screen bg-black">
+      {/* Left Sidebar */}
+      <aside className="fixed left-0 top-0 z-30 h-screen w-80 border-r border-gray-800 bg-gray-900/95 backdrop-blur-sm pt-24">
+        <div className="p-4">
+          {/* Search */}
+          <div className="relative mb-6">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search docs..."
+              className="w-full rounded-lg border border-gray-700 bg-gray-800/50 py-2 pl-10 pr-3 text-sm text-white placeholder-gray-400 focus:border-purple-500 focus:outline-none"
+            />
+          </div>
+
+          {/* Navigation */}
+          <nav className="h-full overflow-y-auto">
+            <ul className="space-y-1">
+              {filteredItems.map((item) => {
+                const IconComponent = item.icon;
+                const isActive = activeSection === item.href;
+                const isExpanded = expandedSections.includes(item.title);
+                const hasChildren = item.children && item.children.length > 0;
+
+                return (
+                  <li key={item.href}>
+                    <Link
+                      to={item.href}
+                      className={cn(
+                        "flex items-center justify-between rounded-lg px-3 py-2 text-sm transition-colors",
+                        isActive
+                          ? "bg-purple-600/20 text-purple-400 border border-purple-600/30"
+                          : "text-gray-400 hover:bg-gray-800 hover:text-white"
+                      )}
+                    >
+                      <div className="flex items-center">
+                        <IconComponent className="mr-3 h-4 w-4" />
+                        <span>{item.title}</span>
+                      </div>
+                      {hasChildren && (
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            toggleSection(item.title);
+                          }}
+                          className="ml-2 p-1 hover:bg-gray-700 rounded"
+                        >
+                          <ChevronRight
+                            className={cn(
+                              "h-3 w-3 transition-transform",
+                              isExpanded ? "rotate-90" : ""
+                            )}
+                          />
+                        </button>
+                      )}
+                    </Link>
+
+                    {/* Children */}
+                    {hasChildren && isExpanded && (
+                      <ul className="ml-6 mt-1 space-y-1">
+                        {item.children.map((child) => {
+                          const isChildActive = activeSection === child.href;
+                          return (
+                            <li key={child.href}>
+                              <Link
+                                to={child.href}
+                                className={cn(
+                                  "block rounded-lg px-3 py-2 text-sm transition-colors",
+                                  isChildActive
+                                    ? "bg-purple-600/20 text-purple-400 border border-purple-600/30"
+                                    : "text-gray-500 hover:bg-gray-800 hover:text-gray-300"
+                                )}
+                              >
+                                {child.title}
+                              </Link>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+        </div>
+      </aside>
+
+      {/* Main Content */}
+      <main className="ml-80 flex-1 pt-24">
+        <div className="mx-auto max-w-4xl px-8 pb-24">
+          <Outlet />
+        </div>
+      </main>
+    </div>
+  );
+}

@@ -11,7 +11,65 @@ import {
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+/**
+ * BLOG PAGE - CMS READY STRUCTURE
+ *
+ * This blog page is structured for easy CMS integration:
+ *
+ * 1. Blog Post Images:
+ *    - Each post has an 'image' property for the main image
+ *    - Each post has an 'imageAlt' property for accessibility
+ *    - Currently all using '/assets/cards/pqt.png' as placeholder
+ *    - When CMS is added, each post will have unique images
+ *
+ * 2. Image Upload Structure for CMS:
+ *    - Blog images should be stored in: /assets/blog/[post-id]/
+ *    - Example: /assets/blog/1/featured.jpg, /assets/blog/2/featured.jpg
+ *    - This makes it easy to manage images per post
+ *
+ * 3. Easy CMS Integration Points:
+ *    - blogPosts array can be replaced with CMS API call
+ *    - Each BlogCard component already handles image display
+ *    - All sections (Featured, Vision, etc.) use the same data structure
+ *    - Image uploads can target the post.image property directly
+ *
+ * 4. To Add New Images via CMS:
+ *    - Upload image to /assets/blog/[post-id]/
+ *    - Update post.image property in database
+ *    - Component will automatically display new image
+ */
+
+// Types for blog data structure
+interface BlogPost {
+  id: number;
+  title: string;
+  excerpt: string;
+  category: string;
+  readTime: string;
+  image: string;
+  imageAlt: string;
+}
+
+interface FilterProps {
+  title: string;
+  options: string[];
+  isActive: boolean;
+  onClick: () => void;
+}
+
+interface TagsProps {
+  tags: Record<string, string[]>;
+  isActive: boolean;
+  onClick: () => void;
+}
+
+interface BlogCardProps {
+  post: BlogPost;
+}
+
 // ------------------ Mock Data ------------------
+// Note: Each blog post will have its own image when CMS is implemented
+// For now, all posts use the same placeholder image (pqt.png)
 const blogPosts = [
   {
     id: 1,
@@ -19,6 +77,8 @@ const blogPosts = [
     excerpt: "Learn about the vision and fundamentals of ARM Chain.",
     category: "Announcement",
     readTime: "3 min read",
+    image: "/assets/cards/armm.png", // Will be unique per post in CMS
+    imageAlt: "ARM Chain Introduction",
   },
   {
     id: 2,
@@ -26,6 +86,8 @@ const blogPosts = [
     excerpt: "Step by step tutorial on deploying contracts.",
     category: "Developer",
     readTime: "5 min read",
+    image: "/assets/cards/qss.png", // Will be unique per post in CMS
+    imageAlt: "Smart Contracts Development",
   },
   {
     id: 3,
@@ -33,6 +95,8 @@ const blogPosts = [
     excerpt: "Research insights into PQC and blockchain security.",
     category: "Research",
     readTime: "4 min read",
+    image: "/assets/cards/qst.png", // Will be unique per post in CMS
+    imageAlt: "Quantum Cryptography Research",
   },
   {
     id: 4,
@@ -40,6 +104,8 @@ const blogPosts = [
     excerpt: "How ARM Chain enables tokenized property ownership.",
     category: "Education",
     readTime: "6 min read",
+    image: "/assets/cards/pqt.png", // Will be unique per post in CMS
+    imageAlt: "Real Estate Tokenization",
   },
   {
     id: 5,
@@ -47,6 +113,8 @@ const blogPosts = [
     excerpt: "Our journey towards scalability and adoption.",
     category: "Vision",
     readTime: "2 min read",
+    image: "/assets/cards/pqt.png", // Will be unique per post in CMS
+    imageAlt: "ARM Chain Roadmap",
   },
 ];
 
@@ -119,7 +187,7 @@ function SearchAndFilters() {
   );
 }
 
-function FilterDropdown({ title, options, isActive, onClick }) {
+function FilterDropdown({ title, options, isActive, onClick }: FilterProps) {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
   const toggleOption = (option: string) => {
@@ -170,7 +238,7 @@ function FilterDropdown({ title, options, isActive, onClick }) {
   );
 }
 
-function TagsDropdown({ tags, isActive, onClick }) {
+function TagsDropdown({ tags, isActive, onClick }: TagsProps) {
   const [selectedTags, setSelectedTags] = useState<Record<string, string[]>>(
     {},
   );
@@ -234,12 +302,23 @@ function TagsDropdown({ tags, isActive, onClick }) {
 }
 
 // ------------------ Sections ------------------
-function BlogCard({ post }) {
+function BlogCard({ post }: BlogCardProps) {
   return (
-    <div className="overflow-hidden rounded-lg bg-gray-900/50">
-      <div className="h-48 bg-gray-800" />
+    <div className="group overflow-hidden rounded-lg bg-gray-900/50 transition-transform hover:scale-105">
+      {/* Blog Card Image - Easy to update via CMS */}
+      <div className="relative h-48 overflow-hidden">
+        <img
+          src={post.image}
+          alt={post.imageAlt}
+          className="h-full w-full object-cover transition-transform group-hover:scale-110"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+      </div>
       <div className="p-4">
-        <h3 className="mb-4 font-bold text-white">{post.title}</h3>
+        <h3 className="mb-4 font-bold text-white group-hover:text-purple-300 transition-colors">
+          {post.title}
+        </h3>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="rounded-full bg-purple-600/20 px-2 py-1 text-xs text-purple-400">
@@ -247,7 +326,7 @@ function BlogCard({ post }) {
             </span>
             <a
               href="#"
-              className="text-sm text-purple-400 hover:text-purple-300"
+              className="text-sm text-purple-400 hover:text-purple-300 transition-colors"
             >
               Read →
             </a>
@@ -290,19 +369,26 @@ function Blog() {
           {/* Featured Blog */}
           <div className="lg:col-span-1">
             <div className="group relative h-[400px] overflow-hidden rounded-xl bg-gray-800">
+              {/* Featured Blog Image - Easy to update via CMS */}
+              <img
+                src={blogPosts[0]?.image || '/assets/cards/pqt.png'}
+                alt={blogPosts[0]?.imageAlt || 'Featured blog post'}
+                className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                loading="lazy"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
               <div className="absolute bottom-0 p-6">
                 <span className="rounded-full bg-purple-600 px-3 py-1 text-sm text-white">
-                  {blogPosts[0].category}
+                  {blogPosts[0]?.category || 'Blog'}
                 </span>
                 <h2 className="mb-2 mt-3 text-3xl font-bold text-white">
-                  {blogPosts[0].title}
+                  {blogPosts[0]?.title || 'Featured Post'}
                 </h2>
                 <p className="mb-2 line-clamp-2 text-lg text-gray-300">
-                  {blogPosts[0].excerpt}
+                  {blogPosts[0]?.excerpt || 'Blog post description'}
                 </p>
                 <span className="text-sm text-gray-400">
-                  {blogPosts[0].readTime}
+                  {blogPosts[0]?.readTime || '5 min read'}
                 </span>
               </div>
             </div>
@@ -339,33 +425,54 @@ function Blog() {
         </section>
 
         {/* Vision Section */}
-        <section className="mt-24 grid grid-cols-2 gap-8">
-          <div className="space-y-4">
-            <h2 className="mb-8 text-2xl font-bold text-white">👁 Vision</h2>
-            {blogPosts.slice(0, 3).map((post) => (
-              <div
-                key={post.id}
-                className="flex gap-4 rounded-lg bg-gray-900/50 p-4 transition-colors hover:bg-gray-900/70"
-              >
-                <div className="h-24 w-24 flex-shrink-0 rounded-lg bg-gray-800" />
-                <div>
-                  <h3 className="mb-2 font-bold text-white">{post.title}</h3>
-                  <p className="text-sm text-gray-400">
-                    {post.category} · {post.readTime}
-                  </p>
-                </div>
-              </div>
-            ))}
+<section className="mt-24">
+  <h2 className="mb-8 text-2xl font-bold text-white">Vision</h2>
+
+  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    {/* Left Column - Only cards */}
+    <div className="space-y-4">
+      {blogPosts.slice(0, 3).map((post) => (
+        <div
+          key={post.id}
+          className="group flex gap-4 rounded-lg bg-gray-900/50 p-4 transition-colors hover:bg-gray-900/70"
+        >
+          {/* Vision Blog Image - Easy to update via CMS */}
+          <div className="h-20 w-24 flex-shrink-0 overflow-hidden rounded-lg">
+            <img
+              src={post.image}
+              alt={post.imageAlt}
+              className="h-full w-full object-cover transition-transform group-hover:scale-110"
+              loading="lazy"
+            />
           </div>
-          <div className="rounded-xl bg-gray-800">
-            {/* Placeholder for right side image */}
+          <div>
+            <h3 className="mb-2 font-bold text-white group-hover:text-purple-300 transition-colors">
+              {post.title}
+            </h3>
+            <p className="text-sm text-gray-400">
+              {post.category} · {post.readTime}
+            </p>
           </div>
-        </section>
+        </div>
+      ))}
+    </div>
+
+    {/* Right side featured image - aligned with cards */}
+    <div className="rounded-xl bg-gray-800 overflow-hidden">
+      <img
+        src={blogPosts[4]?.image || '/assets/cards/pqt.png'}
+        alt={blogPosts[4]?.imageAlt || 'Vision featured image'}
+        className="h-full w-full object-cover"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>
 
         {/* Featured Blogs */}
         <section className="mt-24">
           <div className="mb-8 flex items-center justify-between">
-            <h2 className="text-2xl font-bold text-white">🌟 Featured Blogs</h2>
+            <h2 className="text-2xl font-bold text-white">Featured Blogs</h2>
             <div className="flex gap-2">
               <button className="rounded-full bg-gray-800 p-2 hover:bg-gray-700">
                 <ArrowRight className="h-4 w-4 rotate-180 text-white" />
@@ -385,7 +492,7 @@ function Blog() {
         {/* Fundamentals */}
         <section className="mt-24">
           <div className="mb-8 flex items-center justify-between">
-            <h2 className="text-2xl font-bold text-white">📖 Fundamentals</h2>
+            <h2 className="text-2xl font-bold text-white">Fundamentals</h2>
             <div className="flex gap-2">
               <button className="rounded-full bg-gray-800 p-2 hover:bg-gray-700">
                 <ArrowRight className="h-4 w-4 rotate-180 text-white" />
@@ -405,7 +512,7 @@ function Blog() {
         {/* Builder Section */}
         <section className="mt-24">
           <div className="mb-8 flex items-center justify-between">
-            <h2 className="text-2xl font-bold text-white">🛠 For Builders</h2>
+            <h2 className="text-2xl font-bold text-white">For Builders</h2>
             <div className="flex gap-2">
               <button className="rounded-full bg-gray-800 p-2 hover:bg-gray-700">
                 <ArrowRight className="h-4 w-4 rotate-180 text-white" />
@@ -423,7 +530,7 @@ function Blog() {
         </section>
         {/* Most Recent */}
         <section className="mt-24">
-          <h2 className="mb-8 text-2xl font-bold text-white">🕒 Most Recent</h2>
+          <h2 className="mb-8 text-2xl font-bold text-white">Most Recent</h2>
           <MostRecent />
         </section>
 

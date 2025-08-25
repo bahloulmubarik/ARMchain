@@ -1,16 +1,16 @@
 const stats = [
-  { number: '$2.1B', label: 'Stablecoin Supply' },
-  { number: '117M+', label: 'Unique Addresses' },
-  { number: '$141B', label: 'Transfer Volume' },
-  { number: '5.3B+', label: 'Total Transactions' },
-  { number: '$0.01', label: 'Avg. Tx Fee' },
-  { number: '10,000', label: 'TPS' },
+  { number: '$2.1B', label: 'Stablecoin Supply', transform: '' },
+  { number: '117M+', label: 'Unique Addresses', transform: 'lg:translate-y-24 translate-y-12' },
+  { number: '$141B', label: 'Transfer Volume', transform: '' },
+  { number: '5.3B+', label: 'Total Transactions', transform: 'translate-y-8' },
+  { number: '$0.01', label: 'per average transaction', transform: 'lg:translate-y-32 translate-y-16' },
+  { number: '1,000', label: 'TPS', transform: 'translate-y-8' },
 ];
 
 export function StatisticsSection() {
   return (
     <section
-      className="relative py-32 px-8" // Increased padding for larger section
+      className="relative py-64 px-16" // Increased padding for larger section
       style={{
         backgroundImage: 'url(/assets/feature.jpg)',
         backgroundSize: 'cover',
@@ -28,16 +28,15 @@ export function StatisticsSection() {
         </h2>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 justify-items-center max-w-6xl mx-auto">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-6 justify-items-center max-w-6xl mx-auto">
           {stats.map((stat, index) => (
             <div
               key={index}
-              className={`w-full max-w-[360px] h-[360px] bg-[#1a1a1a]/60 backdrop-blur-sm rounded-xl p-8
-                         hover:bg-blue-600 hover:text-white transition-all duration-300
-                         group cursor-pointer flex items-end hover:scale-105
-                         ${index % 3 === 1 ? 'lg:mt-16' : ''}`} // More drop for middle column
+              className={`w-full max-w-[370px] h-[390px] bg-[#1a1a1a]/60 backdrop-blur-sm rounded-xl p-8
+                         hover:bg-purple-600 hover:text-white transition-all duration-300
+                         group cursor-pointer hover:scale-105 flex items-end ${stat.transform}`}
             >
-              {/* Bottom-left content */}
+              {/* Bottom-left content for all cards */}
               <div>
                 <div className="text-5xl lg:text-6xl font-bold text-white mb-3 group-hover:text-white">
                   {stat.number}

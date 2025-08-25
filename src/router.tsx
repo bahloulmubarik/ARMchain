@@ -6,6 +6,7 @@ export function createRouter() {
     routeTree,
     scrollRestoration: true,
     defaultPreload: "intent",
+
     defaultPendingComponent: () => <div>Loading...</div>,
   });
 

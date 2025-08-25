@@ -4,7 +4,7 @@ import {
   useRouterState,
 } from "@tanstack/react-router";
 import { TRPCReactProvider } from "~/trpc/react";
-import NavbarDemo from '~/components/ui/resizable-navbar-demo';
+import { FloatingNavbar } from '~/components/FloatingNavbar';
 
 export const Route = createRootRoute({
   component: RootComponent,
@@ -19,7 +19,7 @@ function RootComponent() {
 
   return (
     <TRPCReactProvider>
-      <NavbarDemo />
+      <FloatingNavbar />
       <Outlet />
     </TRPCReactProvider>
   );
