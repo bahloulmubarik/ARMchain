@@ -33,6 +33,19 @@ const docSections: DocSection[] = [
     ],
   },
   {
+    title: "Post Quantum Testnet",
+    icon: Server,
+    href: "/docs/post-quantum-testnet",
+    items: [
+      "Testnet Overview",
+      "Getting Started",
+      "Quantum Features",
+      "Smart Contracts",
+      "Mobile Nodes",
+      "Network Monitoring",
+    ],
+  },
+  {
     title: "Developers",
     icon: Code,
     href: "/docs/developers",
@@ -76,6 +89,29 @@ const docSections: DocSection[] = [
       "Monitoring Tools",
     ],
   },
+  {
+    title: "Key Features",
+    icon: BookOpen,
+    href: "/docs/key-features",
+    items: [
+      "Quantum Security",
+      "Mobile Nodes",
+      "Fast Consensus",
+      "Low Latency",
+      "Scalability",
+      "Decentralization",
+    ],
+  },
+  {
+    title: "Advanced Features",
+    icon: Code,
+    href: "/docs/advanced-features",
+    items: [
+      "Quantum Security",
+      "Stablecoin Ecosystem",
+      "Harvest Now Decrypt Later",
+    ],
+  },
 ];
 
 interface DocsLayoutProps {
@@ -94,9 +130,9 @@ export function DocsLayout({ children, title = "Documentation" }: DocsLayoutProp
   );
 
   return (
-    <div className="min-h-screen bg-gray-950">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="sticky top-0 z-50 border-b border-gray-800 bg-gray-900/95 backdrop-blur supports-[backdrop-filter]:bg-gray-900/60">
+      <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
         <div className="flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-4">
             {/* Mobile menu button */}
@@ -105,9 +141,9 @@ export function DocsLayout({ children, title = "Documentation" }: DocsLayoutProp
               className="lg:hidden"
             >
               {sidebarOpen ? (
-                <X className="h-6 w-6 text-gray-400" />
+                <X className="h-6 w-6 text-gray-600" />
               ) : (
-                <Menu className="h-6 w-6 text-gray-400" />
+                <Menu className="h-6 w-6 text-gray-600" />
               )}
             </button>
 
@@ -116,24 +152,24 @@ export function DocsLayout({ children, title = "Documentation" }: DocsLayoutProp
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-r from-[#8129FF] to-[#A25CFE]">
                 <span className="text-sm font-bold text-white">A</span>
               </div>
-              <span className="hidden font-bold text-white sm:block">
+              <span className="hidden font-bold text-gray-900 sm:block">
                 ARMchain
               </span>
             </Link>
 
-            <ChevronRight className="h-4 w-4 text-gray-500" />
-            <span className="text-sm text-gray-400">Documentation</span>
+            <ChevronRight className="h-4 w-4 text-gray-600" />
+            <span className="text-sm text-gray-600">Documentation</span>
           </div>
 
           {/* Search */}
           <div className="relative max-w-sm flex-1 mx-8">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search docs..."
-              className="w-full rounded-lg border border-gray-700 bg-gray-800 py-2 pl-10 pr-4 text-sm text-white placeholder-gray-400 focus:border-[#8129FF] focus:outline-none focus:ring-1 focus:ring-[#8129FF]"
+              className="w-full rounded-lg border border-gray-300 bg-white py-2 pl-10 pr-4 text-sm text-gray-900 placeholder-gray-500 focus:border-[#8129FF] focus:outline-none focus:ring-1 focus:ring-[#8129FF]"
             />
           </div>
 
@@ -141,7 +177,7 @@ export function DocsLayout({ children, title = "Documentation" }: DocsLayoutProp
           <div className="flex items-center gap-2">
             <Link
               to="/"
-              className="rounded-lg border border-gray-700 px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-gray-800 hover:text-white"
+              className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900"
             >
               Back to Site
             </Link>
@@ -149,7 +185,7 @@ export function DocsLayout({ children, title = "Documentation" }: DocsLayoutProp
               href="https://github.com/armchain"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1 rounded-lg border border-gray-700 px-3 py-2 text-sm text-gray-300 transition-colors hover:bg-gray-800 hover:text-white"
+              className="flex items-center gap-1 rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900"
             >
               GitHub
               <ExternalLink className="h-3 w-3" />
@@ -163,7 +199,7 @@ export function DocsLayout({ children, title = "Documentation" }: DocsLayoutProp
         <aside
           className={`${
             sidebarOpen ? "translate-x-0" : "-translate-x-full"
-          } fixed inset-y-0 left-0 top-16 z-40 w-64 transform border-r border-gray-800 bg-gray-900 transition-transform duration-200 ease-in-out lg:relative lg:top-0 lg:translate-x-0`}
+          } fixed inset-y-0 left-0 top-16 z-40 w-64 transform border-r border-gray-200 bg-white transition-transform duration-200 ease-in-out lg:relative lg:top-0 lg:translate-x-0`}
         >
           <div className="h-full overflow-auto p-4">
             <nav className="space-y-2">
@@ -180,7 +216,7 @@ export function DocsLayout({ children, title = "Documentation" }: DocsLayoutProp
                       className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                         isActive
                           ? "bg-[#8129FF]/20 text-[#A25CFE]"
-                          : "text-gray-300 hover:bg-gray-800 hover:text-white"
+                          : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                       }`}
                       onClick={() => setSidebarOpen(false)}
                     >
@@ -190,12 +226,12 @@ export function DocsLayout({ children, title = "Documentation" }: DocsLayoutProp
 
                     {/* Sub-items */}
                     {isOpen && (
-                      <div className="ml-7 mt-2 space-y-1 border-l border-gray-700 pl-4">
+                      <div className="ml-7 mt-2 space-y-1 border-l border-gray-300 pl-4">
                         {section.items.map((item) => (
                           <a
                             key={item}
                             href={`${section.href}#${item.toLowerCase().replace(/\s+/g, "-")}`}
-                            className="block rounded px-2 py-1 text-xs text-gray-400 transition-colors hover:text-gray-300"
+                            className="block rounded px-2 py-1 text-xs text-gray-600 transition-colors hover:text-gray-900"
                             onClick={() => setSidebarOpen(false)}
                           >
                             {item}
@@ -209,8 +245,8 @@ export function DocsLayout({ children, title = "Documentation" }: DocsLayoutProp
             </nav>
 
             {/* Quick Links */}
-            <div className="mt-8 border-t border-gray-800 pt-6">
-              <h4 className="mb-3 text-sm font-medium text-gray-400">
+            <div className="mt-8 border-t border-gray-200 pt-6">
+              <h4 className="mb-3 text-sm font-medium text-[#8129FF]">
                 Quick Links
               </h4>
               <div className="space-y-2">
@@ -218,7 +254,7 @@ export function DocsLayout({ children, title = "Documentation" }: DocsLayoutProp
                   href="https://explorer.armchain.io"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-xs text-gray-400 transition-colors hover:text-gray-300"
+                  className="flex items-center gap-2 text-xs text-gray-600 transition-colors hover:text-gray-900"
                 >
                   Block Explorer
                   <ExternalLink className="h-3 w-3" />
@@ -227,7 +263,7 @@ export function DocsLayout({ children, title = "Documentation" }: DocsLayoutProp
                   href="https://status.armchain.io"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-xs text-gray-400 transition-colors hover:text-gray-300"
+                  className="flex items-center gap-2 text-xs text-gray-600 transition-colors hover:text-gray-900"
                 >
                   Network Status
                   <ExternalLink className="h-3 w-3" />
@@ -236,7 +272,7 @@ export function DocsLayout({ children, title = "Documentation" }: DocsLayoutProp
                   href="https://github.com/armchain/sdk"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-xs text-gray-400 transition-colors hover:text-gray-300"
+                  className="flex items-center gap-2 text-xs text-gray-600 transition-colors hover:text-gray-900"
                 >
                   SDK Repository
                   <ExternalLink className="h-3 w-3" />
@@ -245,8 +281,8 @@ export function DocsLayout({ children, title = "Documentation" }: DocsLayoutProp
             </div>
 
             {/* Support */}
-            <div className="mt-6 border-t border-gray-800 pt-6">
-              <h4 className="mb-3 text-sm font-medium text-gray-400">
+            <div className="mt-6 border-t border-gray-200 pt-6">
+              <h4 className="mb-3 text-sm font-medium text-[#8129FF]">
                 Need Help?
               </h4>
               <div className="space-y-2">
@@ -254,7 +290,7 @@ export function DocsLayout({ children, title = "Documentation" }: DocsLayoutProp
                   href="https://discord.gg/armchain"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-xs text-gray-400 transition-colors hover:text-gray-300"
+                  className="flex items-center gap-2 text-xs text-gray-600 transition-colors hover:text-gray-900"
                 >
                   Discord Community
                   <ExternalLink className="h-3 w-3" />
@@ -263,7 +299,7 @@ export function DocsLayout({ children, title = "Documentation" }: DocsLayoutProp
                   href="https://github.com/armchain/issues"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-xs text-gray-400 transition-colors hover:text-gray-300"
+                  className="flex items-center gap-2 text-xs text-gray-600 transition-colors hover:text-gray-900"
                 >
                   Report Issues
                   <ExternalLink className="h-3 w-3" />
@@ -283,13 +319,13 @@ export function DocsLayout({ children, title = "Documentation" }: DocsLayoutProp
 
         {/* Main Content */}
         <main className="flex-1 min-w-0">
-          <div className="mx-auto max-w-4xl px-4 py-8 lg:px-8">
+          <div className="max-w-none px-0 py-0">
             {/* Breadcrumb */}
             {currentSection && (
-              <div className="mb-6 flex items-center gap-2 text-sm text-gray-400">
+              <div className="mb-6 flex items-center gap-2 text-sm text-gray-600 px-6 pt-6">
                 <Link
                   to="/docs"
-                  className="transition-colors hover:text-gray-300"
+                  className="transition-colors hover:text-gray-900"
                 >
                   Documentation
                 </Link>
@@ -299,13 +335,13 @@ export function DocsLayout({ children, title = "Documentation" }: DocsLayoutProp
             )}
 
             {/* Content */}
-            <div className="prose prose-invert prose-purple max-w-none">
+            <div className="prose prose-gray max-w-none text-gray-900">
               {children}
             </div>
 
             {/* Footer Navigation */}
             {currentSection && (
-              <div className="mt-12 flex items-center justify-between border-t border-gray-800 pt-8">
+              <div className="mt-12 flex items-center justify-between border-t border-gray-200 pt-8">
                 <div className="flex-1">
                   {/* Previous page logic would go here */}
                 </div>

@@ -11,6 +11,7 @@ interface FeatureItemProps {
   description: string;
   isReversed: boolean;
   assetType: string;
+  href: string;
 }
 
 interface Feature {
@@ -18,6 +19,7 @@ interface Feature {
   description: string;
   assetType: string;
   isReversed: boolean;
+  href: string;
 }
 
 // 3D Asset Placeholder Component
@@ -52,7 +54,7 @@ const Asset3D: React.FC<Asset3DProps> = ({ type }) => {
 
 
 // Single Feature Item Component
-const FeatureItem: React.FC<FeatureItemProps> = ({ title, description, isReversed, assetType }) => {
+const FeatureItem: React.FC<FeatureItemProps> = ({ title, description, isReversed, assetType, href }) => {
   return (
     <div className={`grid lg:grid-cols-2 gap-16 items-center py-12 ${isReversed ? 'lg:grid-flow-col-dense' : ''}`}>
       {/* Content - adjusted for single line headings */}
@@ -63,10 +65,10 @@ const FeatureItem: React.FC<FeatureItemProps> = ({ title, description, isReverse
         <p className="text-lg text-gray-300 mb-8 leading-relaxed">
           {description}
         </p>
-        <button className="group inline-flex items-center text-white hover:text-purple-400 transition-colors">
+        <a href={href} className="group inline-flex items-center text-white hover:text-purple-400 transition-colors">
           <span className="text-sm font-medium mr-2">Explore</span>
           <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-        </button>
+        </a>
       </div>
 
       {/* 3D Asset Placeholder */}
@@ -84,19 +86,22 @@ const FeaturesSection: React.FC = () => {
       title: "Quantum Security",
       description: "Experience unparalleled security with our quantum-resistant cryptographic protocols. Built for the future of blockchain technology, ensuring your assets remain protected against emerging quantum computing threats.",
       assetType: "Quantum",
-      isReversed: false
+      isReversed: false,
+      href: "/docs/advanced-features#quantum-security"
     },
     {
       title: "Stablecoin Ecosystem",
       description: "Join a thriving ecosystem of decentralized stablecoins powered by ARMchain's innovative technology. Enable seamless cross-border transactions with minimal fees and maximum security.",
       assetType: "Coin",
-      isReversed: true
+      isReversed: true,
+      href: "/docs/advanced-features#stablecoin-ecosystem"
     },
     {
       title: "Harvest now, Decrypt later",
-      description: "Experience unparalleled security with our quantum-resistant cryptographic protocols. Built for the future of blockchain technology, ensuring your assets remain protected against emerging quantum computing threats.",
+      description: "Experience comprehensive protection against harvest now decrypt later attacks with our quantum-safe architecture. Ensure your data remains secure both today and in the quantum computing future.",
       assetType: "Lock",
-      isReversed: false
+      isReversed: false,
+      href: "/docs/advanced-features#harvest-now-decrypt-later-protection"
     }
   ];
 
@@ -124,6 +129,7 @@ const FeaturesSection: React.FC = () => {
             description={feature.description}
             isReversed={feature.isReversed}
             assetType={feature.assetType}
+            href={feature.href}
           />
         ))}
       </div>

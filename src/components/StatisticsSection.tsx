@@ -10,7 +10,7 @@ const stats = [
 export function StatisticsSection() {
   return (
     <section
-      className="relative py-64 px-16" // Increased padding for larger section
+      className="relative py-24 px-4 sm:py-32 sm:px-8 md:py-48 md:px-16"
       style={{
         backgroundImage: 'url(/assets/feature.jpg)',
         backgroundSize: 'cover',
@@ -23,25 +23,25 @@ export function StatisticsSection() {
 
       <div className="relative z-10 max-w-7xl mx-auto">
         {/* Heading */}
-        <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-16 tracking-tight">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white text-center mb-10 sm:mb-16 tracking-tight">
           By the numbers
         </h2>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-6 justify-items-center max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-6 justify-items-center max-w-6xl mx-auto">
           {stats.map((stat, index) => (
             <div
               key={index}
-              className={`w-full max-w-[370px] h-[390px] bg-[#1a1a1a]/60 backdrop-blur-sm rounded-xl p-8
+              className={`w-full max-w-[370px] h-[220px] sm:h-[300px] md:h-[340px] lg:h-[390px] bg-[#1a1a1a]/60 backdrop-blur-sm rounded-xl p-6 sm:p-8
                          hover:bg-purple-600 hover:text-white transition-all duration-300
                          group cursor-pointer hover:scale-105 flex items-end ${stat.transform}`}
             >
               {/* Bottom-left content for all cards */}
               <div>
-                <div className="text-5xl lg:text-6xl font-bold text-white mb-3 group-hover:text-white">
+                <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 sm:mb-3 group-hover:text-white">
                   {stat.number}
                 </div>
-                <div className="text-gray-400 text-lg lg:text-xl group-hover:text-white/90">
+                <div className="text-gray-400 text-base sm:text-lg md:text-xl group-hover:text-white/90">
                   {stat.label}
                 </div>
               </div>

@@ -7,6 +7,8 @@ import {
   Users,
   Server,
   ArrowRight,
+  Vote,
+  Heart,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -28,6 +30,20 @@ const docSections = [
     ],
   },
   {
+    title: "Post Quantum Testnet",
+    description: "Experience the future of quantum-resistant blockchain technology",
+    icon: Server,
+    href: "/docs/post-quantum-testnet",
+    links: [
+      "Testnet Overview",
+      "Getting Started",
+      "Quantum Features",
+      "Smart Contracts",
+      "Mobile Nodes",
+      "Network Monitoring",
+    ],
+  },
+  {
     title: "Developers",
     description: "Comprehensive guides for developers building on ARMchain",
     icon: Code,
@@ -37,6 +53,18 @@ const docSections = [
       "Smart Contracts",
       "SDK Documentation",
       "Code Examples",
+    ],
+  },
+  {
+    title: "Community Programs",
+    description: "Join our builder, ambassador, and grant programs",
+    icon: Heart,
+    href: "/docs/community/builder-program",
+    links: [
+      "Builder Program",
+      "Ambassador Program",
+      "Grant Program",
+      "Application Process",
     ],
   },
   {
@@ -54,7 +82,7 @@ const docSections = [
   {
     title: "Governance",
     description: "Learn about ARMchain's governance and voting mechanisms",
-    icon: Users,
+    icon: Vote,
     href: "/docs/governance",
     links: [
       "Governance Overview",
@@ -81,9 +109,9 @@ function Docs() {
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-black">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-purple-900/30 via-blue-900/20 to-indigo-900/30 px-4 py-24">
+      <section className="bg-black px-4 py-24">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="mb-6 text-5xl font-bold tracking-tight text-white md:text-6xl">
             Documentation
@@ -151,13 +179,13 @@ function Docs() {
       </section>
 
       {/* Quick Links */}
-      <section className="bg-gray-900/50 px-4 py-24">
+      <section className="bg-black px-4 py-24">
         <div className="mx-auto max-w-6xl text-center">
           <h2 className="mb-16 text-4xl font-bold tracking-tight text-white">
             Popular Resources
           </h2>
 
-          <div className="grid gap-8 md:grid-cols-2">
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             <Link
               to="/docs/$docId"
               params={{ docId: "getting-started" }}
@@ -196,6 +224,26 @@ function Docs() {
               </p>
               <span className="inline-flex items-center text-lg font-bold text-[#A25CFE]">
                 View Docs
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </span>
+            </Link>
+
+            <Link
+              to="/docs/$docId"
+              params={{ docId: "community/builder-program" }}
+              className="group block rounded-2xl border border-white/10 bg-gradient-to-br from-gray-800/60 to-gray-900/60 p-12 text-left backdrop-blur-sm transition-transform duration-300 hover:scale-105"
+            >
+              <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-r from-[#8129FF] to-[#A25CFE]">
+                <Heart className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="mb-6 text-2xl font-bold text-white transition-colors group-hover:text-[#A25CFE]">
+                Community Programs
+              </h3>
+              <p className="mb-6 text-lg text-gray-400">
+                Join our builder, ambassador, and grant programs to help grow the ARMchain ecosystem
+              </p>
+              <span className="inline-flex items-center text-lg font-bold text-[#A25CFE]">
+                Join Community
                 <ArrowRight className="ml-2 h-5 w-5" />
               </span>
             </Link>

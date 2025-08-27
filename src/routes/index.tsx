@@ -3,6 +3,7 @@ import Hero from '~/components/Hero';
 import { FeatureSection } from '~/components/FeatureSection';
 import { InnovationCardsSection } from '~/components/InnovationCardsSection';
 import { MobileNodesSection } from '~/components/MobileNodesSection';
+import { QSecureWalletSection } from '~/components/QSecureWalletSection';
 import { StatisticsSection } from '~/components/StatisticsSection';
 import { NewsSection } from '~/components/NewsSection';
 import { PartnersSection } from '~/components/PartnersSection';
@@ -21,6 +22,7 @@ function Home() {
       <FeatureSection />
 
       <MobileNodesSection />
+      <QSecureWalletSection />
       <StatisticsSection />
 
       <NewsSection />

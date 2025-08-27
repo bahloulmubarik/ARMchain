@@ -58,6 +58,7 @@ const PaginationDots = ({ totalSlides, currentSlide, onSlideChange }: Pagination
 interface Feature {
   title: string;
   backgroundImage?: string;
+  href?: string;
 }
 
 const Slide1: React.FC = () => {
@@ -65,14 +66,17 @@ const Slide1: React.FC = () => {
     {
       title: "Post Quantum Testnet",
       backgroundImage: "/assets/cards/cta1.png",
+      href: "/docs/post-quantum-testnet",
     },
     {
       title: "Whitepaper",
       backgroundImage: "/assets/cards/cta2.png",
+      href: "/docs/whitepaper",
     },
     {
       title: "Build",
       backgroundImage: "/assets/cards/cta3.png",
+      href: "/docs/developers",
     },
   ];
 
@@ -81,7 +85,7 @@ const Slide1: React.FC = () => {
   {/* Background image */}
   <div className="absolute inset-0">
     <img
-      src="/assets/background/heroslide1.png"
+      src="/assets/background/heroslideee.png"
       alt="Hero background"
       className="w-full h-full object-cover"
     />
@@ -112,12 +116,14 @@ const Slide1: React.FC = () => {
           {/* Feature cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 mb-10">
             {features.map((feature) => (
-              <div
+              <a
                 key={feature.title}
+                href={feature.href}
                 className={`
                   relative overflow-hidden backdrop-blur-sm border border-white/6
                   rounded-2xl p-6 hover:border-white/12
-                  transition-all duration-300 min-h-[150px] group
+                  transition-all duration-300 min-h-[150px] group cursor-pointer
+                  hover:scale-105 hover:shadow-2xl
                 `}
               >
                 {/* Background image */}
@@ -139,33 +145,30 @@ const Slide1: React.FC = () => {
                     </h3>
                   </div>
 
-                  <button
-  className="fixed bottom-4 left-4 w-10 h-10 bg-gradient-to-r from-purple-600 to-purple-700 rounded-full flex items-center justify-center text-white hover:from-purple-500 hover:to-purple-600 hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900"
-  aria-label={`Explore ${feature.title}`}
->
-  <svg
-    className="w-4 h-4"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-    aria-hidden="true"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M9 5l7 7-7 7"
-    />
-  </svg>
-</button>
+                  <div className="absolute bottom-1 left-1 w-10 h-10 bg-gradient-to-r from-purple-600 to-purple-700 rounded-full flex items-center justify-center text-white group-hover:from-purple-500 group-hover:to-purple-600 group-hover:scale-110 transition-all duration-200">
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </div>
                 </div>
-              </div>
+              </a>
             ))}
           </div>
 
           {/* CTA button */}
           <div>
-            <button className="inline-flex items-center gap-3 bg-gradient-to-r from-purple-600 to-purple-700 text-white font-semibold px-8 py-4 rounded-2xl hover:from-purple-500 hover:to-purple-600 hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-black">
+            <a href="/docs" className="inline-flex items-center gap-3 bg-gradient-to-r from-purple-600 to-purple-700 text-white font-semibold px-8 py-4 rounded-2xl hover:from-purple-500 hover:to-purple-600 hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-black">
               <span>Explore ARMChain</span>
               <svg
                 className="w-3 h-3"
@@ -181,7 +184,7 @@ const Slide1: React.FC = () => {
                   d="M9 5l7 7-7 7"
                 />
               </svg>
-            </button>
+            </a>
           </div>
         </div>
       </div>
@@ -189,13 +192,21 @@ const Slide1: React.FC = () => {
   );
 };
 /// Slide 2 Component
-const Slide2 = () => {
+interface Slide2Props {
+  onSearchStart?: () => void;
+  onSearchEnd?: () => void;
+}
+
+const Slide2 = ({ onSearchStart, onSearchEnd }: Slide2Props = {}) => {
   const flipperWords = ["Trust", "Power", "Scale", "Speed", "Future"];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [aiResult, setAiResult] = useState<string | null>(null);
   const [lastSearchQuery, setLastSearchQuery] = useState("");
+  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
+  const [waitlistEmail, setWaitlistEmail] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
 
   // Text flipping
   useEffect(() => {
@@ -218,6 +229,8 @@ const Slide2 = () => {
     e.preventDefault();
     if (searchQuery.trim()) {
       setIsLoading(true);
+      setIsSearching(true);
+      onSearchStart?.();
       try {
         const result = await trpcClient.aiSearch.mutate({ query: searchQuery.trim() });
         setAiResult(result.result);
@@ -231,6 +244,22 @@ const Slide2 = () => {
       } finally {
         setIsLoading(false);
       }
+    }
+  };
+
+  const handleWaitlistSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (waitlistEmail.trim()) {
+      // Simple email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(waitlistEmail)) {
+        alert('Please enter a valid email address');
+        return;
+      }
+
+      alert(`✅ Thank you! ${waitlistEmail} has been added to our waitlist. You'll be notified when ARM Token launches!`);
+      setWaitlistEmail('');
+      setIsWaitlistOpen(false);
     }
   };
 
@@ -249,7 +278,7 @@ const Slide2 = () => {
           className="w-full h-full object-cover"
           style={{ objectPosition: "center" }}
         >
-          <source src="/assets/Background/slide2.mp4" type="video/mp4" />
+          <source src="/assets/Background/heroslidee.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
         <div className="absolute inset-0 bg-black/40"></div>
@@ -286,12 +315,14 @@ const Slide2 = () => {
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 mb-6 mt-1 animate-fade-in-up">
           <button
+            onClick={() => setIsWaitlistOpen(true)}
             className="min-h-[42px] px-7 rounded-full font-semibold transition duration-200 text-white bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-400"
           >
             Join Waitlist
           </button>
-          <button
-            className="min-h-[42px] px-7 rounded-full font-semibold transition duration-200 border focus:outline-none focus:ring-2 focus:ring-white/40"
+          <a
+            href="/docs/arm-token"
+            className="min-h-[42px] px-7 rounded-full font-semibold transition duration-200 border focus:outline-none focus:ring-2 focus:ring-white/40 inline-flex items-center"
             style={{
               backgroundColor: "#13161C",
               borderColor: "rgba(255,255,255,0.16)",
@@ -299,7 +330,7 @@ const Slide2 = () => {
             }}
           >
             ARM Token
-          </button>
+          </a>
         </div>
 
         {/* AI Search Box */}
@@ -328,10 +359,68 @@ const Slide2 = () => {
         </div>
       </div>
 
+      {/* Waitlist Modal */}
+      {isWaitlistOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+            onClick={() => setIsWaitlistOpen(false)}
+          />
+
+          <div className="relative bg-gray-900 rounded-2xl border border-gray-700 w-full max-w-md p-6 shadow-2xl">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-2xl font-bold text-white">Join ARM Token Waitlist</h3>
+              <button
+                onClick={() => setIsWaitlistOpen(false)}
+                className="w-8 h-8 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center transition-colors"
+              >
+                <span className="text-gray-300 text-lg">×</span>
+              </button>
+            </div>
+
+            <form onSubmit={handleWaitlistSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  required
+                  value={waitlistEmail}
+                  onChange={(e) => setWaitlistEmail(e.target.value)}
+                  className="w-full bg-gray-800 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-purple-500 focus:outline-none"
+                  placeholder="your@email.com"
+                />
+              </div>
+
+              <div className="bg-gray-800/50 rounded-lg p-4">
+                <p className="text-sm text-gray-300">
+                  🚀 Be the first to know when ARM Token launches
+                </p>
+                <p className="text-xs text-gray-400 mt-2">
+                  Get exclusive early access and updates
+                </p>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white font-bold py-3 rounded-lg hover:from-purple-500 hover:to-purple-600 transition-all duration-300"
+              >
+                Join Waitlist
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
       {/* AI Search Popup */}
       <AISearchPopup
         isOpen={isPopupOpen}
-        onClose={() => setIsPopupOpen(false)}
+        onClose={() => {
+          setIsPopupOpen(false);
+          setIsSearching(false);
+          onSearchEnd?.();
+        }}
         query={lastSearchQuery}
         result={aiResult}
         isLoading={isLoading}
@@ -446,9 +535,10 @@ const Slide3 = () => {
 
 // Main Hero Slider Component
 export default function HeroSlider() {
-  const SLIDES = [Slide1, Slide2, Slide3];
+  const SLIDES = [Slide1, Slide2];
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isSearchActive, setIsSearchActive] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const autoPlayRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -456,7 +546,7 @@ export default function HeroSlider() {
 
   // Auto-play functionality
   useEffect(() => {
-    if (isAutoPlaying) {
+    if (isAutoPlaying && !isSearchActive) {
       autoPlayRef.current = setInterval(() => {
         setCurrentSlide((prev) => (prev + 1) % SLIDES.length);
       }, AUTO_PLAY_INTERVAL);
@@ -473,7 +563,7 @@ export default function HeroSlider() {
         autoPlayRef.current = null;
       }
     };
-  }, [isAutoPlaying]);
+  }, [isAutoPlaying, isSearchActive]);
 
   // Cleanup effect for timeout
   useEffect(() => {
@@ -558,7 +648,11 @@ export default function HeroSlider() {
       >
         {SLIDES.map((SlideComponent, index) => (
           <div key={index} className="w-full h-full flex-shrink-0">
-            <SlideComponent />
+            {index === 1 ? (
+              <Slide2 onSearchStart={() => setIsSearchActive(true)} onSearchEnd={() => setIsSearchActive(false)} />
+            ) : (
+              <SlideComponent />
+            )}
           </div>
         ))}
       </div>

@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Footer } from "~/components/Footer";
 import {
   ArrowRight,
@@ -119,20 +119,20 @@ function Community() {
 
           <div className="mx-auto grid max-w-7xl gap-4 md:grid-cols-3">
             <CommunityCard
-              title="Technical Community"
-              description="Join our developer community to collaborate on quantum-resistant blockchain solutions."
+              title="Quantathon"
+              description="Join our builder hackathon to build Dapps."
               href="/docs"
               backgroundVideo="/assets/Background/tc.mp4"
             />
             <CommunityCard
-              title="Non-Technical Community"
-              description="Connect with other ARMchain enthusiasts and learn about our ecosystem."
+              title="Airdrop"
+              description="Join our airdrop to earn rewards."
               href="/community"
               backgroundVideo="/assets/Background/ntc.mp4"
             />
             <CommunityCard
-              title="Events & Meetups"
-              description="Participate in global events and local meetups to grow the ARMchain network."
+              title="Giveaways"
+              description="Participate in out latest giveaways compaign"
               href="/events"
               backgroundVideo="/assets/Background/mup.mp4"
             />
@@ -146,7 +146,7 @@ function Community() {
           <div
             className="relative overflow-hidden rounded-3xl border border-gray-800 bg-cover bg-center p-16 shadow-2xl"
             style={{
-              backgroundImage: "url('/assets/Background/beo.png')",
+              backgroundImage: "url('/assets/Background/beoo.png')",
             }}
           >
             {/* Content */}
@@ -154,10 +154,7 @@ function Community() {
               <h2 className="mb-6 text-4xl font-bold leading-tight tracking-tight text-white md:text-5xl lg:text-6xl">
                 Join as Ambassador
               </h2>
-
-              <button className="rounded-full bg-white px-12 py-5 text-xl font-bold text-[#8129FF] shadow-lg transition-transform duration-300 hover:-translate-y-1 hover:bg-gray-100 hover:shadow-xl">
                 Become an Ambassador
-              </button>
             </div>
           </div>
         </div>
@@ -211,6 +208,13 @@ function Community() {
 
           <div className="mx-auto grid max-w-7xl gap-4 md:grid-cols-3">
             <div className="relative h-64 overflow-hidden rounded-xl border border-gray-800 bg-black p-6 transition-all duration-300 hover:border-purple-600/50">
+              {/* X Logo Background */}
+              <img
+                src="/assets/Background/xlogo.png"
+                alt="X Logo Background"
+                className="absolute inset-0 h-full w-full object-contain opacity-100 pointer-events-none select-none"
+                style={{ zIndex: 0 }}
+              />
               <div className="relative z-10 flex h-full flex-col justify-between">
                 <div>
                   {/* Top section with icon, title, description */}
@@ -237,7 +241,7 @@ function Community() {
 
                 {/* CTA button at bottom */}
                 <a
-                  href="#"
+                  href="https://x.com/ARMchain_pqc"
                   className="inline-flex w-fit items-center rounded-full bg-gradient-to-r from-purple-600 to-purple-700 px-5 py-2 text-sm font-bold text-white transition-all duration-300 hover:from-purple-500 hover:to-purple-600"
                 >
                   Follow
@@ -248,6 +252,13 @@ function Community() {
 
             {/* LinkedIn Card */}
             <div className="relative h-64 overflow-hidden rounded-xl border border-gray-800 bg-black p-6 transition-all duration-300 hover:border-purple-600/50">
+              {/* LinkedIn Logo Background */}
+              <img
+                src="/assets/Background/linkedinlogo.png"
+                alt="LinkedIn Logo Background"
+                className="absolute inset-0 h-full w-full object-contain opacity-100 pointer-events-none select-none"
+                style={{ zIndex: 0 }}
+              />
               <div className="relative z-10 flex h-full flex-col justify-between">
                 <div>
                   <div className="flex items-start justify-between">
@@ -283,6 +294,13 @@ function Community() {
 
             {/* Telegram Card */}
             <div className="relative h-64 overflow-hidden rounded-xl border border-gray-800 bg-black p-6 transition-all duration-300 hover:border-purple-600/50">
+              {/* Telegram Logo Background */}
+              <img
+                src="/assets/Background/telegramlogo.png"
+                alt="Telegram Logo Background"
+                className="absolute inset-0 h-full w-full object-contain opacity-100 pointer-events-none select-none"
+                style={{ zIndex: 0 }}
+              />
               <div className="relative z-10 flex h-full flex-col justify-between">
                 <div>
                   <div className="flex items-start justify-between">

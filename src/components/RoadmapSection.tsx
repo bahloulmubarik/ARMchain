@@ -76,18 +76,18 @@ function RoadmapCard({
       )}
 
       {/* Content */}
-      <div className="relative z-10 flex h-full flex-col justify-between">
+      <div className="relative z-10 flex h-full flex-col justify-start text-left">
         <div>
-          <span className="text-purple-400 font-bold text-sm">{quarter}</span>
-          <h3 className="mt-2 text-xl font-bold text-white">{title}</h3>
-          <p className="mt-1 text-sm text-gray-300">{description}</p>
+          <span className="text-purple-400 font-bold text-lg">{quarter}</span>
+          <h3 className="mt-2 text-2xl md:text-3xl font-bold text-white">{title}</h3>
+          <p className="mt-3 text-base text-gray-300">{description}</p>
         </div>
 
-        <ul className="mt-3 space-y-1">
+        <ul className="mt-4 space-y-2">
           {features.map((feature: string, idx: number) => (
             <li
               key={idx}
-              className="text-xs text-gray-400 flex items-center before:mr-2 before:block before:h-1 before:w-1 before:rounded-full before:bg-purple-500"
+              className="text-sm text-gray-400 flex items-center before:mr-3 before:block before:h-2 before:w-2 before:rounded-full before:bg-purple-500"
             >
               {feature}
             </li>

@@ -1,70 +1,80 @@
 import { useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-const newsItems = [
+// Featured blog posts from blog page
+const featuredBlogPosts = [
   {
     id: 1,
-    image: '/api/placeholder/300/200',
-    date: 'Dec 15, 2024',
-    category: 'Technology',
-    title: 'ARMchain Launches Quantum-Resistant Infrastructure'
+    title: "Introducing ARM Chain",
+    excerpt: "Learn about the vision and fundamentals of ARM Chain.",
+    category: "Announcement",
+    readTime: "3 min read",
+    image: "/assets/cards/armm.png",
+    imageAlt: "ARM Chain Introduction",
   },
   {
     id: 2,
-    image: '/api/placeholder/300/200',
-    date: 'Dec 10, 2024',
-    category: 'Partnership',
-    title: 'Major DeFi Protocol Integrates ARMchain Technology'
+    title: "Developer Guide to ARM Smart Contracts",
+    excerpt: "Step by step tutorial on deploying contracts.",
+    category: "Developer",
+    readTime: "5 min read",
+    image: "/assets/cards/qss.png",
+    imageAlt: "Smart Contracts Development",
   },
   {
     id: 3,
-    image: '/api/placeholder/300/200',
-    date: 'Dec 5, 2024',
-    category: 'Research',
-    title: 'Breakthrough in Mobile Node Efficiency Achieved'
+    title: "Quantum-Resistant Cryptography Explained",
+    excerpt: "Research insights into PQC and blockchain security.",
+    category: "Research",
+    readTime: "4 min read",
+    image: "/assets/cards/qst.png",
+    imageAlt: "Quantum Cryptography Research",
   },
   {
     id: 4,
-    image: '/api/placeholder/300/200',
-    date: 'Nov 28, 2024',
-    category: 'Community',
-    title: 'ARMchain Developer Conference Announces Speakers'
+    title: "Tokenization of Real Estate",
+    excerpt: "How ARM Chain enables tokenized property ownership.",
+    category: "Education",
+    readTime: "6 min read",
+    image: "/assets/cards/pqt.png",
+    imageAlt: "Real Estate Tokenization",
   },
   {
     id: 5,
-    image: '/api/placeholder/300/200',
-    date: 'Nov 25, 2024',
-    category: 'Technology',
-    title: 'New Consensus Algorithm Reduces Energy Consumption'
+    title: "ARM Chain Roadmap 2025",
+    excerpt: "Our journey towards scalability and adoption.",
+    category: "Vision",
+    readTime: "2 min read",
+    image: "/assets/cards/pqt.png",
+    imageAlt: "ARM Chain Roadmap",
   },
   {
     id: 6,
-    image: '/api/placeholder/300/200',
-    date: 'Nov 20, 2024',
-    category: 'Partnership',
-    title: 'Enterprise Adoption Grows with New Integrations'
+    title: "Post-Quantum Security in Practice",
+    excerpt: "Real-world applications of quantum-resistant algorithms.",
+    category: "Technology",
+    readTime: "7 min read",
+    image: "/assets/qunatum1.jpg",
+    imageAlt: "Post-Quantum Security",
   },
   {
     id: 7,
-    image: '/api/placeholder/300/200',
-    date: 'Nov 15, 2024',
-    category: 'Research',
-    title: 'Quantum Computing Impact Study Released'
+    title: "Building on ARMChain",
+    excerpt: "Developer resources and best practices.",
+    category: "Developer",
+    readTime: "5 min read",
+    image: "/assets/qunatum2.jpg",
+    imageAlt: "Building on ARMChain",
   },
   {
     id: 8,
-    image: '/api/placeholder/300/200',
-    date: 'Nov 10, 2024',
-    category: 'Community',
-    title: 'Global Hackathon Winners Announced'
+    title: "Community Governance Evolution",
+    excerpt: "Decentralized decision making in the ARMChain ecosystem.",
+    category: "Community",
+    readTime: "4 min read",
+    image: "/assets/qunatum3.jpg",
+    imageAlt: "Community Governance",
   }
-];
-
-const newsImages = [
-  '/assets/qunatum1.jpg',
-  '/assets/qunatum2.jpg',
-  '/assets/qunatum3.jpg',
-  '/assets/quantum4.jpg',
 ];
 
 export function NewsSection() {
@@ -108,39 +118,44 @@ export function NewsSection() {
           </div>
         </div>
 
-        {/* Horizontal Scrolling News Cards */}
+        {/* Horizontal Scrolling Blog Cards */}
         <div
           ref={scrollContainerRef}
           className="flex gap-8 overflow-x-auto scrollbar-hide pb-4"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          {newsItems.map((item, index) => (
-            <div key={item.id} className="group cursor-pointer flex-shrink-0 w-80">
-              <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-xl overflow-hidden hover:scale-105 transition-all duration-500 border border-white/10">
-                {/* Image */}
-                <div className="relative h-48">
-                  <img
-                    src={newsImages[index % newsImages.length]}
-                    alt={item.title}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#8129FF]/10 to-[#A25CFE]/10 group-hover:from-[#8129FF]/20 group-hover:to-[#A25CFE]/20 transition-all duration-300" />
-                </div>
-
-                {/* Content */}
-                <div className="p-6">
-                  <div className="flex items-center space-x-3 mb-2">
-                    <span className="text-xs text-gray-400">{item.date}</span>
-                    <span className="px-2 py-1 bg-[#8129FF]/20 text-[#A25CFE] text-xs rounded-full">
-                      {item.category}
-                    </span>
+          {featuredBlogPosts.map((post) => (
+            <div key={post.id} className="group cursor-pointer flex-shrink-0 w-80">
+              <a href={`/blog`} className="block">
+                <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-xl overflow-hidden hover:scale-105 transition-all duration-500 border border-white/10">
+                  {/* Image */}
+                  <div className="relative h-48">
+                    <img
+                      src={post.image}
+                      alt={post.imageAlt}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#8129FF]/10 to-[#A25CFE]/10 group-hover:from-[#8129FF]/20 group-hover:to-[#A25CFE]/20 transition-all duration-300" />
                   </div>
-                  <h3 className="text-xl font-bold text-white group-hover:text-[#A25CFE] transition-colors min-h-[84px]">
-                    {item.title}
-                  </h3>
+
+                  {/* Content */}
+                  <div className="p-6">
+                    <div className="flex items-center space-x-3 mb-2">
+                      <span className="text-xs text-gray-400">{post.readTime}</span>
+                      <span className="px-2 py-1 bg-[#8129FF]/20 text-[#A25CFE] text-xs rounded-full">
+                        {post.category}
+                      </span>
+                    </div>
+                    <h3 className="text-xl font-bold text-white group-hover:text-[#A25CFE] transition-colors min-h-[84px]">
+                      {post.title}
+                    </h3>
+                    <p className="text-sm text-gray-400 mt-2 line-clamp-2">
+                      {post.excerpt}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              </a>
             </div>
           ))}
         </div>

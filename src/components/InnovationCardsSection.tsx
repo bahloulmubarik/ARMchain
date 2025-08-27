@@ -5,36 +5,42 @@ export function InnovationCardsSection() {
     {
       title: "Quantum Security",
       description:
-        "Connect any popular wallet such as MetaMask to launch your blockchain adventure.",
+        "Experience unparalleled security with quantum-resistant cryptographic protocols built for the future.",
       image: "/assets/cards/card1.png",
+      href: "/docs/key-features#quantum-security",
     },
     {
       title: "Mobile Nodes",
       description:
-        "Run blockchain nodes directly from mobile devices for maximum flexibility.",
+        "Run blockchain nodes directly from mobile devices for maximum flexibility and global participation.",
       image: "/assets/cards/card-2.png",
+      href: "/docs/key-features#mobile-nodes",
     },
     {
       title: "Fast Consensus",
       description:
-        "Achieve finality in seconds with our high-speed consensus mechanism.",
+        "Achieve finality in seconds with our quantum-safe consensus mechanism and instant transaction confirmation.",
       image: "/assets/cards/card-3.png",
+      href: "/docs/key-features#fast-consensus",
     },
     {
       title: "Low Latency",
-      description: "Experience seamless, real-time blockchain interactions.",
+      description: "Experience seamless, real-time blockchain interactions with sub-second confirmation times.",
       image: "/assets/cards/card-4.png",
+      href: "/docs/key-features#low-latency",
     },
     {
       title: "Scalability",
-      description: "Scale effortlessly without compromising performance.",
+      description: "Scale effortlessly to handle enterprise-level transaction volumes without compromising decentralization.",
       image: "/assets/cards/card-5.png",
+      href: "/docs/key-features#scalability",
     },
     {
       title: "Decentralization",
       description:
-        "Ensure trust and resilience with a fully decentralized network.",
+        "Ensure trust and resilience with a truly decentralized network spanning the globe.",
       image: "/assets/cards/card-6.png",
+      href: "/docs/key-features#decentralization",
     },
   ];
 
@@ -42,13 +48,14 @@ export function InnovationCardsSection() {
   const scrollingItems = [...items, ...items];
 
   return (
-    <section className="bg-black px-4 pb-12 pt-40">
+    <section className="bg-black px-4 pb-8 pt-24">
       <div className="mx-auto max-w-7xl overflow-hidden">
         <div className="animate-scroll flex gap-8">
           {scrollingItems.map((item, index) => (
-            <div
+            <a
               key={index}
-              className="group relative h-[420px] w-80 flex-shrink-0 cursor-pointer overflow-hidden rounded-3xl border border-gray-800 shadow-lg"
+              href={item.href}
+              className="group relative h-[360px] w-80 flex-shrink-0 cursor-pointer overflow-hidden rounded-3xl border border-gray-800 shadow-lg hover:border-[#8129FF] transition-all duration-300"
             >
               {/* Background Image */}
               <img
@@ -70,14 +77,11 @@ export function InnovationCardsSection() {
                   </h3>
                   <p className="text-white-700">{item.description}</p>
                 </div>
-                <a
-                  href="#"
-                  className="font-semibold text-[#8129FF] hover:underline"
-                >
+                <span className="font-semibold text-[#8129FF] hover:underline">
                   Learn More →
-                </a>
+                </span>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </div>

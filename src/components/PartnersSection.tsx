@@ -3,6 +3,10 @@ const logos = [
   '/assets/logo/armdv.png',
   '/assets/logo/armswap.png',
   '/assets/logo/dhrp.png',
+  '/assets/logo/logo1.png',
+  '/assets/logo/logo2.png',
+  '/assets/logo/logo3.png',
+  '/assets/logo/logo4.png',
 ];
 
 export function PartnersSection() {

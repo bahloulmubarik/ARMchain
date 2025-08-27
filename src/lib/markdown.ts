@@ -8,8 +8,11 @@ export interface DocContent {
 // Load markdown content via fetch from the public directory
 export async function loadMarkdownContent(docId: string): Promise<DocContent | null> {
   try {
+    // Handle nested paths by converting slashes
+    const filePath = docId.includes('/') ? `${docId}.md` : `${docId}.md`;
+
     // Fetch markdown content from the docs directory
-    const response = await fetch(`/docs/${docId}.md`);
+    const response = await fetch(`/docs/${filePath}`);
     if (!response.ok) {
       throw new Error(`Failed to load ${docId}: ${response.statusText}`);
     }

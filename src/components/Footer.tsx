@@ -10,9 +10,11 @@ export function Footer() {
           {/* Column 1 - Company Info */}
           <div className="lg:col-span-1">
             <div className="flex items-center space-x-3 mb-6">
-              <div className="w-10 h-10 bg-gradient-to-r from-[#8129FF] to-[#A25CFE] rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">A</span>
-              </div>
+              <img
+                src="/assets/logo/armchainlogo.svg"
+                alt="ARMchain Logo"
+                className="w-14 h-14"
+              />
               <h3 className="text-2xl font-bold text-white">ARMchain</h3>
             </div>
             <p className="text-gray-400 leading-relaxed mb-6">

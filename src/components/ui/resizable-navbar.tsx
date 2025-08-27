@@ -233,12 +233,15 @@ export const NavbarLogo = () => {
   return (
     <a
       href="/"
-      className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black"
+      className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black h-12" // fixed navbar height
     >
-      <div className="w-8 h-8 bg-gradient-to-r from-[#8129FF] to-[#A25CFE] rounded-lg flex items-center justify-center">
-        <span className="text-white font-bold text-xs">A</span>
+      <div className="h-full flex items-center">
+        <img
+          src="/assets/logo/armchainlogo.svg"
+          alt="ARMchain Logo"
+          className="h-12 w-auto" // scales logo without stretching navbar
+        />
       </div>
-      <span className="font-medium text-black dark:text-white">ARMchain</span>
     </a>
   );
 };
