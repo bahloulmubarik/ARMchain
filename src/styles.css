@@ -1,8 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;460;560;640;700&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;460;560;640;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 html {
   color-scheme: dark;
   scroll-behavior: smooth;
@@ -10,10 +9,18 @@ html {
 
 /* Offset anchor scrolling for fixed navbar */
 section[id] {
-  scroll-margin-top: 96px;
+  scroll-margin-top: 64px;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
 }
 
 * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
   @apply border-gray-200 dark:border-gray-800;
 }
 
