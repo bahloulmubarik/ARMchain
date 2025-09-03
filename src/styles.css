@@ -5,6 +5,7 @@
 html {
   color-scheme: dark;
   scroll-behavior: smooth;
+  background-color: #000;
 }
 
 /* Offset anchor scrolling for fixed navbar */
@@ -25,7 +26,7 @@ html, body {
 }
 
 body {
-  @apply bg-gray-900 text-gray-200 font-sans;
+  @apply bg-black text-white font-sans;
   font-family: 'Inter', system-ui, sans-serif;
 }
 

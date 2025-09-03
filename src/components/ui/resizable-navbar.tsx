@@ -102,8 +102,7 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
         minWidth: "800px",
       }}
       className={cn(
-        "relative z-[60] mx-auto hidden w-full max-w-7xl flex-row items-center justify-between self-start rounded-full bg-transparent px-4 py-2 lg:flex dark:bg-transparent",
-        visible && "bg-white/80 dark:bg-neutral-950/80",
+        "relative z-[60] mx-auto hidden w-full max-w-7xl flex-row items-center justify-between self-start rounded-full bg-black/90 backdrop-blur-md px-4 py-2 lg:flex",
         className,
       )}
     >
@@ -164,8 +163,7 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
         damping: 50,
       }}
       className={cn(
-        "relative z-50 mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col items-center justify-between bg-transparent px-0 py-2 lg:hidden",
-        visible && "bg-white/80 dark:bg-neutral-950/80",
+        "relative z-50 mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col items-center justify-between bg-black/90 backdrop-blur-md px-0 py-2 lg:hidden",
         className,
       )}
     >
@@ -223,9 +221,9 @@ export const MobileNavToggle = ({
   onClick: () => void;
 }) => {
   return isOpen ? (
-    <X className="text-black dark:text-white cursor-pointer" onClick={onClick} />
+    <X className="text-white cursor-pointer" onClick={onClick} />
   ) : (
-    <Menu className="text-black dark:text-white cursor-pointer" onClick={onClick} />
+    <Menu className="text-white cursor-pointer" onClick={onClick} />
   );
 };
 
@@ -233,7 +231,7 @@ export const NavbarLogo = () => {
   return (
     <a
       href="/"
-      className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black h-12" // fixed navbar height
+      className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-white h-12" // fixed navbar height
     >
       <div className="h-full flex items-center">
         <img

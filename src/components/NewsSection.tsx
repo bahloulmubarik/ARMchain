@@ -125,11 +125,11 @@ export function NewsSection() {
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {featuredBlogPosts.map((post) => (
-            <div key={post.id} className="group cursor-pointer flex-shrink-0 w-80">
-              <a href={`/blog`} className="block">
-                <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-xl overflow-hidden hover:scale-105 transition-all duration-500 border border-white/10">
+            <div key={post.id} className="group cursor-pointer flex-shrink-0 w-80 h-[420px]">
+              <a href={`/blog`} className="block h-full">
+                <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-xl overflow-hidden hover:scale-105 transition-all duration-500 border border-white/10 h-full flex flex-col">
                   {/* Image */}
-                  <div className="relative h-48">
+                  <div className="relative h-48 flex-shrink-0">
                     <img
                       src={post.image}
                       alt={post.imageAlt}
@@ -140,17 +140,17 @@ export function NewsSection() {
                   </div>
 
                   {/* Content */}
-                  <div className="p-6">
-                    <div className="flex items-center space-x-3 mb-2">
+                  <div className="p-6 flex-1 flex flex-col">
+                    <div className="flex items-center space-x-3 mb-3">
                       <span className="text-xs text-gray-400">{post.readTime}</span>
                       <span className="px-2 py-1 bg-[#8129FF]/20 text-[#A25CFE] text-xs rounded-full">
                         {post.category}
                       </span>
                     </div>
-                    <h3 className="text-xl font-bold text-white group-hover:text-[#A25CFE] transition-colors min-h-[84px]">
+                    <h3 className="text-xl font-bold text-white group-hover:text-[#A25CFE] transition-colors mb-3 line-clamp-2 flex-1">
                       {post.title}
                     </h3>
-                    <p className="text-sm text-gray-400 mt-2 line-clamp-2">
+                    <p className="text-sm text-gray-400 line-clamp-2">
                       {post.excerpt}
                     </p>
                   </div>

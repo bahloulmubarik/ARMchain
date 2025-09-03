@@ -6,10 +6,10 @@ import { RouterProvider } from "@tanstack/react-router";
 
 import "./styles.css";
 
-import { createRouter } from "./router";
+import { createAppRouter } from "./router";
 
 // Set up a Router instance
-const router = createRouter();
+const router = createAppRouter();
 
 const rootElement = document.getElementById("root")!;
 if (!rootElement.innerHTML) {

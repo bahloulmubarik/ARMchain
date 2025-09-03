@@ -157,6 +157,12 @@ export function FloatingNavbar() {
     // Clear any pending timeouts
   };
 
+  // const isMobile = window.innerWidth <= 768;
+
+  // if (isMobile) {
+  //   return null;
+  // }
+
   return (
     <div className="relative w-full">
       <Navbar>
@@ -175,14 +181,14 @@ export function FloatingNavbar() {
               >
                 <Link
                   to={item.path}
-                  className="relative px-4 py-2 text-neutral-700 dark:text-neutral-300 hover:text-[#A25CFE] transition-colors text-title font-simibold"
+                  className="relative px-4 py-2 text-white hover:text-[#A25CFE] transition-colors text-title font-simibold"
                 >
                   <span className="relative z-20">{item.name}</span>
                 </Link>
 
                 {item.subItems && (
                   <div
-                    className={`absolute left-0 top-full mt-2 w-[380px] rounded-xl border border-neutral-200/20 dark:border-neutral-800/50 bg-white/95 dark:bg-neutral-950/95 backdrop-blur-md shadow-xl transition-all duration-300 z-50 ${
+                    className={`absolute left-0 top-full mt-2 w-[380px] rounded-xl border border-purple-500/30 bg-black/95 backdrop-blur-md shadow-xl transition-all duration-300 z-50 ${
                       activeDesktop === item.name
                         ? "opacity-100 translate-y-0 pointer-events-auto"
                         : "opacity-0 -translate-y-2 pointer-events-none"
@@ -217,7 +223,7 @@ export function FloatingNavbar() {
                     <div className="p-4">
                       <Link
                         to={item.path}
-                        className="block px-3 py-3 rounded-lg text-base font-semibold text-neutral-900 dark:text-white hover:bg-neutral-100/60 dark:hover:bg-neutral-800/60 transition-colors"
+                        className="block px-3 py-3 rounded-lg text-base font-semibold text-white hover:bg-purple-600/20 transition-colors"
                       >
                         {item.name} Overview
                       </Link>
@@ -226,7 +232,7 @@ export function FloatingNavbar() {
                           <Link
                             key={sub.name}
                             to={sub.path}
-                            className="block px-3 py-3 rounded-lg hover:bg-neutral-100/50 dark:hover:bg-neutral-800/50 transition-colors group"
+                            className="block px-3 py-3 rounded-lg hover:bg-purple-600/20 transition-colors group"
                           >
                             <div className="flex items-start">
                               {sub.icon && (
@@ -235,11 +241,11 @@ export function FloatingNavbar() {
                                 </div>
                               )}
                               <div>
-                                <div className="title text-neutral-900 dark:text-white group-hover:text-[#A25CFE]">
+                                <div className="title text-white group-hover:text-[#A25CFE]">
                                   {sub.name}
                                 </div>
                                 {sub.description && (
-                                  <div className="description mt-1">
+                                  <div className="description mt-1 text-gray-300">
                                     {sub.description}
                                   </div>
                                 )}
@@ -312,7 +318,7 @@ export function FloatingNavbar() {
                               className="absolute inset-0 bg-cover bg-center"
                               style={{ backgroundImage: `url(${item.heroImage})` }}
                             >
-                              <div className="absolute inset-0 bg-black/40"></div>
+                              <div className="absolute inset-0 bg-black/70"></div>
                             </div>
                           )}
                           {item.heroGradient && (
@@ -341,7 +347,7 @@ export function FloatingNavbar() {
                               key={`mobile-sub-${item.name}-${sub.name}`}
                               to={sub.path}
                               onClick={() => setIsMobileMenuOpen(false)}
-                              className="block py-2 px-2 rounded-lg text-neutral-600 dark:text-neutral-400 hover:text-[#A25CFE] hover:bg-neutral-100/50 dark:hover:bg-neutral-800/50 transition-colors"
+                              className="block py-2 px-2 rounded-lg text-gray-300 hover:text-[#A25CFE] hover:bg-purple-600/20 transition-colors"
                             >
                               <div className="flex items-center">
                                 {sub.icon && (
@@ -367,7 +373,7 @@ export function FloatingNavbar() {
                     <Link
                       to={item.path}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="block relative text-neutral-700 dark:text-neutral-300 hover:text-[#A25CFE] transition-colors py-3 px-2 rounded-lg hover:bg-neutral-100/50 dark:hover:bg-neutral-800/50 font-medium"
+                      className="block relative text-white hover:text-[#A25CFE] transition-colors py-3 px-2 rounded-lg hover:bg-neutral-800/50 font-medium"
                     >
                       <span className="block">{item.name}</span>
                     </Link>

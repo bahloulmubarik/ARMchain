@@ -2,51 +2,40 @@ import React from 'react';
 import { ArrowRight } from 'lucide-react';
 
 // Types
-interface Asset3DProps {
-  type: string;
-}
-
 interface FeatureItemProps {
   title: string;
   description: string;
   isReversed: boolean;
-  assetType: string;
+  videoSrc: string;
   href: string;
 }
 
 interface Feature {
   title: string;
   description: string;
-  assetType: string;
+  videoSrc: string;
   isReversed: boolean;
   href: string;
 }
 
-// 3D Asset Placeholder Component
-const Asset3D: React.FC<Asset3DProps> = ({ type }) => {
-  const getImage = () => {
-    switch (type) {
-      case "Quantum":
-        return { src: "/assets/spiral.png", alt: "Quantum Spiral" };
-      case "Coin":
-        return { src: "/assets/jiggo.png", alt: "Coin Jiggo" };
-      case "Lock":
-        return { src: "/assets/spiral.png", alt: "Lock Spiral" };
-      default:
-        return null;
-    }
-  };
-
-  const image = getImage();
-  if (!image) return null;
-
+// Video Asset Component
+const VideoAsset: React.FC<{ src: string; alt: string }> = ({ src, alt }) => {
   return (
-    <div className="w-80 h-80 flex items-center justify-center bg-transparent">
-      <img
-        src={image.src}
-        alt={image.alt}
-        className="w-full h-full object-contain transform scale-[1.2]"
-        style={{ background: "none", boxShadow: "none", border: "none" }}
+    <div className="w-80 h-80 lg:w-96 lg:h-96 xl:w-[420px] xl:h-[420px] flex items-center justify-center rounded-xl overflow-hidden">
+      <video
+        src={src}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        className="w-full h-full object-cover rounded-xl"
+        aria-label={alt}
+        onLoadStart={(e) => {
+          const video = e.currentTarget;
+          video.currentTime = 0;
+          video.play();
+        }}
       />
     </div>
   );
@@ -54,26 +43,26 @@ const Asset3D: React.FC<Asset3DProps> = ({ type }) => {
 
 
 // Single Feature Item Component
-const FeatureItem: React.FC<FeatureItemProps> = ({ title, description, isReversed, assetType, href }) => {
+const FeatureItem: React.FC<FeatureItemProps> = ({ title, description, isReversed, videoSrc, href }) => {
   return (
-    <div className={`grid lg:grid-cols-2 gap-16 items-center py-12 ${isReversed ? 'lg:grid-flow-col-dense' : ''}`}>
-      {/* Content - adjusted for single line headings */}
-      <div className={`${isReversed ? 'lg:col-start-2' : ''} px-6 lg:px-8 lg:ml-4`}>
-        <h2 className="text-3xl md:text-4xl lg:text-4xl font-bold text-white mb-6 tracking-tight leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
+    <div className={`grid lg:grid-cols-2 gap-8 lg:gap-12 items-center py-8 lg:py-12 ${isReversed ? 'lg:grid-flow-col-dense' : ''}`}>
+      {/* Content */}
+      <div className={`${isReversed ? 'lg:col-start-2' : ''} px-4 lg:px-6`}>
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 lg:mb-6 tracking-tight leading-tight">
           {title}
         </h2>
-        <p className="text-lg text-gray-300 mb-8 leading-relaxed">
+        <p className="text-base lg:text-lg text-gray-300 mb-6 lg:mb-8 leading-relaxed">
           {description}
         </p>
-        <a href={href} className="group inline-flex items-center text-white hover:text-purple-400 transition-colors">
+        <a href={href} className="group inline-flex items-center text-white hover:text-purple-400 transition-colors duration-200">
           <span className="text-sm font-medium mr-2">Explore</span>
-          <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+          <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
         </a>
       </div>
 
-      {/* 3D Asset Placeholder */}
+      {/* Video Asset */}
       <div className={`flex justify-center ${isReversed ? 'lg:col-start-1' : ''}`}>
-        <Asset3D type={assetType} />
+        <VideoAsset src={videoSrc} alt={`${title} animation`} />
       </div>
     </div>
   );
@@ -85,28 +74,28 @@ const FeaturesSection: React.FC = () => {
     {
       title: "Quantum Security",
       description: "Experience unparalleled security with our quantum-resistant cryptographic protocols. Built for the future of blockchain technology, ensuring your assets remain protected against emerging quantum computing threats.",
-      assetType: "Quantum",
+      videoSrc: "/assets/Background/Animation_01.mp4",
       isReversed: false,
       href: "/docs/advanced-features#quantum-security"
     },
     {
-      title: "Stablecoin Ecosystem",
-      description: "Join a thriving ecosystem of decentralized stablecoins powered by ARMchain's innovative technology. Enable seamless cross-border transactions with minimal fees and maximum security.",
-      assetType: "Coin",
+      title: "Ultra-Fast Consensus",
+      description: "Achieve lightning-fast finality with ARMchain’s next-gen consensus. Optimized for quantum security and high throughput, enabling thousands of transactions per second with minimal latency..",
+      videoSrc: "/assets/Background/Animation_02.mp4",
       isReversed: true,
       href: "/docs/advanced-features#stablecoin-ecosystem"
     },
     {
-      title: "Harvest now, Decrypt later",
-      description: "Experience comprehensive protection against harvest now decrypt later attacks with our quantum-safe architecture. Ensure your data remains secure both today and in the quantum computing future.",
-      assetType: "Lock",
+      title: "Sustainable Infrastructure",
+      description: "Scale without limits. ARMchain’s architecture ensures sustainable growth, low energy usage, and support for mass adoption built for the future of global blockchain ecosystems.",
+      videoSrc: "/assets/Background/Animation_01.mp4",
       isReversed: false,
       href: "/docs/advanced-features#harvest-now-decrypt-later-protection"
     }
   ];
 
   return (
-    <section className="relative py-24 px-4">
+    <section className="relative py-16 lg:py-24 px-4">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <div
@@ -121,17 +110,19 @@ const FeaturesSection: React.FC = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-10">
-        {features.map((feature, index) => (
-          <FeatureItem
-            key={index}
-            title={feature.title}
-            description={feature.description}
-            isReversed={feature.isReversed}
-            assetType={feature.assetType}
-            href={feature.href}
-          />
-        ))}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 lg:px-8">
+        <div className="space-y-12 lg:space-y-16">
+          {features.map((feature, index) => (
+            <FeatureItem
+              key={index}
+              title={feature.title}
+              description={feature.description}
+              isReversed={feature.isReversed}
+              videoSrc={feature.videoSrc}
+              href={feature.href}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

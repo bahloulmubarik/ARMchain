@@ -5,12 +5,11 @@ import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 import tsConfigPaths from "vite-tsconfig-paths";
 import { config } from "vinxi/plugins/config";
 import { env } from "./src/server/env";
-import { nodePolyfills } from "vite-plugin-node-polyfills";
 import { consoleForwardPlugin } from "./vite-console-forward-plugin";
 
 export default createApp({
   server: {
-    preset: "node-server", // change to 'netlify' or 'bun' or anyof the supported presets for nitro (nitro.unjs.io)
+    preset: "vercel", // deploy for Vercel Build Output API
     experimental: {
       asyncContext: true,
     },
@@ -48,7 +47,7 @@ export default createApp({
       handler: "./src/server/debug/client-logs-handler.ts",
       target: "server",
       plugins: () => [
-        config("allowedHosts", {
+        config("allowedH~osts", {
           // @ts-ignore
           server: {
             allowedHosts: env.BASE_URL
@@ -85,7 +84,6 @@ export default createApp({
           generatedRouteTree: "./src/generated/routeTree.gen.ts",
         }),
         reactRefresh(),
-        nodePolyfills(),
         consoleForwardPlugin({
           enabled: true,
           endpoint: "/api/debug/client-logs",

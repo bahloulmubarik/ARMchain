@@ -3,6 +3,20 @@ import type { TouchEvent } from "react";
 import { useTRPC, useTRPCClient } from "~/trpc/react";
 import { AISearchPopup } from "~/components/AISearchPopup";
 
+// Error boundary for TRPC
+const withErrorBoundary = <P extends object>(
+  Component: React.ComponentType<P>
+) => {
+  return (props: P) => {
+    try {
+      return <Component {...props} />;
+    } catch (error) {
+      console.error('Component error:', error);
+      return <div className="text-white">Something went wrong. Please refresh the page.</div>;
+    }
+  };
+};
+
 const AUTO_PLAY_INTERVAL = 5000; // 5 seconds
 
 // Navigation Arrow Component
@@ -81,20 +95,20 @@ const Slide1: React.FC = () => {
   ];
 
   return (
-    <div className="relative w-full h-full min-h-screen overflow-hidden">
+    <div className="relative w-full h-full min-h-screen overflow-hidden bg-black">
   {/* Background image */}
   <div className="absolute inset-0">
     <img
-      src="/assets/background/heroslideee.png"
+      src="/assets/Background/heroslideee.png"
       alt="Hero background"
-      className="w-full h-full object-cover"
+      className="w-full h-full object-cover opacity-90 sm:opacity-80"
     />
-    {/* Optional dark overlay for readability */}
-    <div className="absolute inset-0 bg-black/60" />
+    {/* Dark overlay for better readability - lighter on mobile */}
+    <div className="absolute inset-0 bg-black/30 sm:bg-black/50" />
   </div>
       {/* Content wrapper */}
-      <div className="relative z-10 mx-auto px-6 lg:px-8 h-full flex items-center max-w-screen-xl">
-        <div className="w-full text-center pt-30">
+      <div className="relative z-10 mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center max-w-screen-xl">
+        <div className="w-full text-center pt-20 sm:pt-30">
           {/* Top badge */}
           <div className="mb-6">
             <div className="inline-flex items-center gap-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full px-4 py-2 text-sm text-purple-300">
@@ -120,19 +134,19 @@ const Slide1: React.FC = () => {
                 key={feature.title}
                 href={feature.href}
                 className={`
-                  relative overflow-hidden backdrop-blur-sm border border-white/6
-                  rounded-2xl p-6 hover:border-white/12
+                  relative overflow-hidden
+                  rounded-2xl p-6
                   transition-all duration-300 min-h-[150px] group cursor-pointer
-                  hover:scale-105 hover:shadow-2xl
+                  hover:scale-105 hover:shadow-2xl border border-purple-500/30
                 `}
               >
                 {/* Background image */}
                 {feature.backgroundImage && (
-                  <div className="absolute inset-0 opacity-100">
+                  <div className="absolute inset-0">
                     <img
                       src={feature.backgroundImage}
                       alt={feature.title}
-                      className="w-full h-full object-cover rounded-2xl"
+                      className="w-full h-full object-cover rounded-2xl opacity-100"
                       loading="lazy"
                     />
                   </div>
@@ -224,12 +238,26 @@ const Slide2 = ({ onSearchStart, onSearchEnd }: Slide2Props = {}) => {
   // TRPC + OpenAI mutation
   const trpcClient = useTRPCClient();
   const [isLoading, setIsLoading] = useState(false);
+  const [trpcError, setTrpcError] = useState<string | null>(null);
+
+  // Fallback if TRPC is not available
+  if (!trpcClient) {
+    return (
+      <div className="relative w-full h-screen flex items-center justify-center text-center px-6 lg:px-8 overflow-hidden bg-gray-900">
+        <div className="text-white">
+          <h1 className="text-4xl font-bold mb-4">ARMChain</h1>
+          <p className="text-gray-400">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   const handleSearchSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       setIsLoading(true);
       setIsSearching(true);
+      setTrpcError(null);
       onSearchStart?.();
       try {
         const result = await trpcClient.aiSearch.mutate({ query: searchQuery.trim() });
@@ -238,6 +266,7 @@ const Slide2 = ({ onSearchStart, onSearchEnd }: Slide2Props = {}) => {
         setIsPopupOpen(true);
       } catch (error: any) {
         console.error("AI Search failed:", error);
+        setTrpcError(error?.message || "Search failed. Please try again.");
         setAiResult(null);
         setLastSearchQuery(searchQuery);
         setIsPopupOpen(true);
@@ -281,7 +310,7 @@ const Slide2 = ({ onSearchStart, onSearchEnd }: Slide2Props = {}) => {
           <source src="/assets/Background/heroslidee.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
-        <div className="absolute inset-0 bg-black/40"></div>
+        <div className="absolute inset-0 bg-black/70"></div>
       </div>
 
       <div className="w-full max-w-4xl mx-auto relative z-10">
@@ -337,17 +366,17 @@ const Slide2 = ({ onSearchStart, onSearchEnd }: Slide2Props = {}) => {
         <div className="max-w-md mx-auto mt-8 animate-fade-in-up" style={{ animationDelay: "200ms" }}>
           <form
             onSubmit={handleSearchSubmit}
-            className="flex border border-white/12 rounded-2xl overflow-hidden focus-within:ring-2 focus-within:ring-purple-400"
-            style={{ minHeight: "40px", backgroundColor: "#13161C" }}
+            className="flex border border-purple-500/50 rounded-2xl overflow-hidden focus-within:ring-2 focus-within:ring-purple-400"
+            style={{ minHeight: "40px", backgroundColor: "rgba(0,0,0,0.8)" }}
           >
             <input
               type="text"
               placeholder="How to be quantum-safe?"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="flex-1 px-6 bg-transparent text-white placeholder-gray-400 focus:outline-none text-base"
+              className="flex-1 px-6 bg-transparent text-white placeholder-gray-300 focus:outline-none text-base"
             />
-            <div className="w-px bg-white/10"></div>
+            <div className="w-px bg-purple-500/30"></div>
             <button
               type="submit"
               disabled={isLoading}
@@ -450,7 +479,7 @@ const Slide3 = () => {
           Your browser does not support the video tag.
         </video>
         {/* Overlay to ensure text readability */}
-        <div className="absolute inset-0 bg-black/40"></div>
+        <div className="absolute inset-0 bg-black/70"></div>
       </div>
 
       {/* Content Block (bottom-left) */}
@@ -487,10 +516,10 @@ const Slide3 = () => {
       </div>
 
       {/* Stats Card (bottom-right, wide & short) */}
-      <div className="absolute top-[70%] right-6 sm:right-12 w-[95%] lg:w-[960px] bg-[rgba(10,12,16,0.65)] border border-white/10 backdrop-blur-xl rounded-xl shadow-lg p-6 z-10">
+      <div className="absolute top-[70%] right-6 sm:right-12 w-[95%] lg:w-[960px] bg-black/80 border border-purple-500/30 backdrop-blur-xl rounded-xl shadow-lg p-6 z-10">
 
         {/* Title */}
-        <div className="inline-block mb-4 px-3 py-1 text-sm font-medium rounded-full bg-white/10 text-white">
+        <div className="inline-block mb-4 px-3 py-1 text-sm font-medium rounded-full bg-purple-600/30 text-white border border-purple-500/50">
           Network Stats
         </div>
 
